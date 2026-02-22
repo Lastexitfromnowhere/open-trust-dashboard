@@ -802,6 +802,10 @@ footer a:hover { color: #ffffff; }
           <span class="field-note"> · needs <code style="font-size:9px;">public_repo</code> scope · never leaves your browser</span>
         </label>
         <input type="password" id="attestToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+        <div style="margin-top:6px;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-muted);cursor:pointer;" id="attestTokenRememberRow">
+          <div class="toggle" id="attestTokenToggle" style="width:26px;height:14px;"></div>
+          <span>Remember on this device</span>
+        </div>
       </div>
     </div>
 
@@ -869,11 +873,15 @@ footer a:hover { color: #ffffff; }
                 spellcheck="false" autocomplete="off">
             </div>
             <div style="flex:1;min-width:180px;">
-              <label style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);display:block;margin-bottom:5px;">GitHub Token <span style="text-transform:none;letter-spacing:0;">(issues:write scope)</span></label>
+              <label style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);display:block;margin-bottom:5px;">GitHub Token <span style="text-transform:none;letter-spacing:0;">(public_repo scope)</span></label>
               <input type="password" id="reqSubmitToken"
                 placeholder="ghp_xxxxxxxxxxxx"
                 style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 12px;outline:none;"
                 spellcheck="false" autocomplete="off">
+              <div style="margin-top:5px;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-muted);cursor:pointer;" id="reqTokenRememberRow">
+                <div class="toggle" id="reqTokenToggle" style="width:26px;height:14px;"></div>
+                <span>Remember on this device</span>
+              </div>
             </div>
           </div>
 
@@ -1317,7 +1325,6 @@ const btnGenerate       = document.getElementById('btnGenerate');
 const attestStatement   = document.getElementById('attestStatement');
 const attestScope       = document.getElementById('attestScope');
 const attestPass        = document.getElementById('attestPass');
-const attestToken       = document.getElementById('attestToken');
 const btnAttest         = document.getElementById('btnAttest');
 const attestProgressWrap= document.getElementById('attestProgressWrap');
 const attestProgressFill= document.getElementById('attestProgressFill');
@@ -1822,6 +1829,56 @@ ${JSON.stringify(p, null, 2)}
     submitReqBtnText.textContent   = '▶ \u00a0OPEN ISSUE';
     btnSubmitReq.disabled          = false;
   }
+});
+
+// ── GitHub token — shared localStorage across all tabs ────────────────────
+
+const STORAGE_KEY = 'ot_github_token';
+
+const attestToken         = document.getElementById('attestToken');
+const attestTokenToggle   = document.getElementById('attestTokenToggle');
+const attestTokenRememberRow = document.getElementById('attestTokenRememberRow');
+const reqTokenToggle      = document.getElementById('reqTokenToggle');
+const reqTokenRememberRow = document.getElementById('reqTokenRememberRow');
+
+// Load saved token on startup
+(function loadSavedToken() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return;
+  attestToken.value       = saved;
+  reqSubmitToken.value    = saved;
+  attestTokenToggle.classList.add('on');
+  reqTokenToggle.classList.add('on');
+  checkSubmitReady();
+})();
+
+// Sync both token fields together
+function syncToken(value) {
+  attestToken.value    = value;
+  reqSubmitToken.value = value;
+  checkSubmitReady();
+  // If "remember" is on in either toggle, persist
+  if (attestTokenToggle.classList.contains('on') || reqTokenToggle.classList.contains('on')) {
+    if (value) localStorage.setItem(STORAGE_KEY, value);
+    else       localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+attestToken.addEventListener('input', () => syncToken(attestToken.value));
+reqSubmitToken.addEventListener('input', () => syncToken(reqSubmitToken.value));
+
+// Remember toggles
+attestTokenRememberRow.addEventListener('click', () => {
+  const on = attestTokenToggle.classList.toggle('on');
+  reqTokenToggle.classList.toggle('on', on);
+  if (on && attestToken.value) localStorage.setItem(STORAGE_KEY, attestToken.value);
+  else localStorage.removeItem(STORAGE_KEY);
+});
+reqTokenRememberRow.addEventListener('click', () => {
+  const on = reqTokenToggle.classList.toggle('on');
+  attestTokenToggle.classList.toggle('on', on);
+  if (on && reqSubmitToken.value) localStorage.setItem(STORAGE_KEY, reqSubmitToken.value);
+  else localStorage.removeItem(STORAGE_KEY);
 });
 
 // ── REQUESTS TAB — Browse list ────────────────────────────────────────────
