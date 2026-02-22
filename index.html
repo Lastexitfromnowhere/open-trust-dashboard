@@ -52,22 +52,14 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Scanline overlay ─────────────────────────────────────────────────────── */
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.07) 2px,
-    rgba(0,0,0,0.07) 4px
-  );
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
   pointer-events: none;
   z-index: 0;
 }
 
-/* ── Ambient glow ─────────────────────────────────────────────────────────── */
 body::after {
   content: '';
   position: fixed;
@@ -78,7 +70,6 @@ body::after {
   z-index: 0;
 }
 
-/* ── Layout ──────────────────────────────────────────────────────────────── */
 .wrapper {
   position: relative; z-index: 1;
   max-width: 860px;
@@ -91,16 +82,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 36px 0 48px;
+  padding: 36px 0 32px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 48px;
+  margin-bottom: 0;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+.logo { display: flex; align-items: center; gap: 14px; }
 
 .logo-icon {
   width: 40px; height: 40px;
@@ -112,34 +99,43 @@ header {
   animation: glow-pulse 2.4s ease-in-out infinite;
 }
 
-.logo-text {
-  display: flex; flex-direction: column;
-}
+.logo-text { display: flex; flex-direction: column; }
 .logo-name {
   font-family: var(--title);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--accent);
+  font-size: 16px; font-weight: 700;
+  letter-spacing: 0.12em; color: var(--accent);
 }
 .logo-tagline {
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-family: var(--mono);
+  font-size: 10px; color: var(--text-muted);
+  letter-spacing: 0.08em; text-transform: uppercase;
 }
 
 .header-badge {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 5px 12px;
-  letter-spacing: 0.06em;
+  font-size: 10px; color: var(--text-muted);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 5px 12px; letter-spacing: 0.06em;
 }
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.tab-btn {
+  font-family: var(--title);
+  font-size: 11px; letter-spacing: 0.14em;
+  color: var(--text-muted);
+  background: none; border: none;
+  border-bottom: 2px solid transparent;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: -1px;
+}
+.tab-btn:hover { color: var(--text-dim); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 .hero {
@@ -148,522 +144,363 @@ header {
 }
 .hero h1 {
   font-family: var(--title);
-  font-size: clamp(22px, 4.5vw, 34px);
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: #ffffff;
+  font-size: clamp(22px, 4.5vw, 34px); font-weight: 900;
+  letter-spacing: 0.04em; color: #ffffff;
   margin-bottom: 14px;
   text-shadow: 0 0 40px rgba(74,222,128,0.15);
 }
 .hero p {
-  color: var(--text-dim);
-  font-size: 13px;
-  max-width: 480px;
-  margin: 0 auto 20px;
-  letter-spacing: 0.02em;
+  color: var(--text-dim); font-size: 13px;
+  max-width: 480px; margin: 0 auto 20px;
 }
 
-/* ── Zero-upload badge ────────────────────────────────────────────────────── */
 .zero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
   background: var(--accent-dim);
   border: 1px solid rgba(74,222,128,0.20);
   border-radius: var(--radius);
-  padding: 6px 16px;
-  font-size: 11px;
-  color: var(--accent);
-  font-family: var(--mono);
-  letter-spacing: 0.04em;
+  padding: 6px 16px; font-size: 11px;
+  color: var(--accent); letter-spacing: 0.04em;
 }
-.zero-badge svg { flex-shrink: 0; }
 
 /* ── Card ────────────────────────────────────────────────────────────────── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 16px;
+  padding: 24px; margin-bottom: 16px;
   transition: border-color 0.2s;
 }
 .card:hover { border-color: rgba(74,222,128,0.15); }
 
 .card-title {
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--text-muted);
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.14em; color: var(--text-muted);
   margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; align-items: center; gap: 10px;
 }
 .card-title .step-num {
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: var(--accent-dim);
-  border: 1px solid var(--border-hi);
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent-dim); border: 1px solid var(--border-hi);
   display: grid; place-items: center;
-  font-size: 10px;
-  color: var(--accent);
-  font-family: var(--mono);
+  font-size: 10px; color: var(--accent);
 }
 
-/* ── Drop zone ────────────────────────────────────────────────────────────── */
+/* ── Drop zone (verify) ───────────────────────────────────────────────────── */
 .drop-zone {
   border: 1px dashed rgba(255,255,255,0.10);
-  border-radius: var(--radius);
-  padding: 44px 24px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  position: relative;
+  border-radius: var(--radius); padding: 44px 24px;
+  text-align: center; cursor: pointer;
+  transition: all 0.25s; position: relative;
   background: var(--surface2);
 }
-.drop-zone:hover,
-.drop-zone.drag-over {
+.drop-zone:hover, .drop-zone.drag-over {
   border-color: var(--accent);
   background: rgba(74,222,128,0.03);
   box-shadow: 0 0 40px rgba(74,222,128,0.05), inset 0 0 30px rgba(74,222,128,0.02);
 }
-.drop-zone input[type=file] {
-  position: absolute; inset: 0;
-  opacity: 0; cursor: pointer;
-}
-.drop-zone .drop-icon {
-  font-size: 30px;
-  margin-bottom: 12px;
-  display: block;
-  opacity: 0.5;
-}
-.drop-zone .drop-title {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text);
-  margin-bottom: 6px;
-  letter-spacing: 0.04em;
-}
-.drop-zone .drop-hint {
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 0.02em;
-}
+.drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.drop-zone .drop-icon { font-size: 30px; margin-bottom: 12px; display: block; opacity: 0.5; }
+.drop-zone .drop-title { font-size: 13px; color: var(--text); margin-bottom: 6px; letter-spacing: 0.04em; }
+.drop-zone .drop-hint { font-size: 11px; color: var(--text-muted); }
 .drop-zone .drop-hint code {
   font-family: var(--mono);
-  background: rgba(74,222,128,0.08);
-  color: var(--accent);
-  padding: 1px 6px;
-  border-radius: var(--radius-sm);
-  font-size: 11px;
+  background: rgba(74,222,128,0.08); color: var(--accent);
+  padding: 1px 6px; border-radius: var(--radius-sm); font-size: 11px;
 }
 
 /* ── File pills ───────────────────────────────────────────────────────────── */
-.files-list {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-top: 12px;
-}
+.files-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .file-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 5px 10px;
-  font-size: 11px;
-  font-family: var(--mono);
-  color: var(--text-dim);
-  animation: fadein 0.2s ease;
-  letter-spacing: 0.02em;
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 5px 10px;
+  font-size: 11px; font-family: var(--mono);
+  color: var(--text-dim); animation: fadein 0.2s ease;
 }
 .file-pill.type-binary    { border-color: rgba(192,132,252,0.25); color: var(--purple); }
 .file-pill.type-provenance{ border-color: rgba(74,222,128,0.25);  color: var(--accent); }
-.file-pill.type-unknown   { border-color: var(--border); color: var(--text-muted); }
 .file-pill .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
 /* ── Registry input ───────────────────────────────────────────────────────── */
-.registry-row {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.input-wrap {
-  flex: 1;
-  position: relative;
-}
+.registry-row { display: flex; gap: 10px; align-items: center; }
+.input-wrap { flex: 1; position: relative; }
 .input-wrap label {
-  display: block;
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
-  font-family: var(--mono);
+  display: block; font-size: 10px; color: var(--text-muted);
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.10em;
 }
 .input-wrap input {
-  width: 100%;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 12px;
-  padding: 10px 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  letter-spacing: 0.02em;
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text);
+  font-family: var(--mono); font-size: 12px; padding: 10px 14px;
+  transition: border-color 0.2s; outline: none;
 }
-.input-wrap input:focus {
-  border-color: rgba(74,222,128,0.50);
-  box-shadow: 0 0 0 3px rgba(74,222,128,0.06);
-}
+.input-wrap input:focus { border-color: rgba(74,222,128,0.50); box-shadow: 0 0 0 3px rgba(74,222,128,0.06); }
 .input-wrap input::placeholder { color: var(--text-muted); opacity: 0.5; }
 
 /* ── Toggle ──────────────────────────────────────────────────────────────── */
 .toggle-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--text-muted);
-  cursor: pointer;
-  user-select: none;
-  padding-top: 20px;
-  font-family: var(--mono);
-  letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: var(--text-muted);
+  cursor: pointer; user-select: none; padding-top: 20px;
 }
 .toggle {
   width: 34px; height: 18px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  position: relative;
-  transition: background 0.2s;
-  cursor: pointer;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 9px; position: relative; transition: background 0.2s; cursor: pointer;
 }
 .toggle::after {
-  content: '';
-  position: absolute;
-  top: 3px; left: 3px;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  transition: transform 0.2s, background 0.2s;
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--text-muted); transition: transform 0.2s, background 0.2s;
 }
 .toggle.on { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.50); }
 .toggle.on::after { transform: translateX(16px); background: var(--accent); }
 
-/* ── Verify button ───────────────────────────────────────────────────────── */
-.btn-verify {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 15px;
+/* ── Verify / Attest buttons ─────────────────────────────────────────────── */
+.btn-verify, .btn-attest {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 15px;
   background: rgba(74,222,128,0.06);
   border: 1px solid rgba(74,222,128,0.25);
-  border-radius: var(--radius);
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 400;
-  font-family: var(--title);
-  letter-spacing: 0.14em;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 8px;
+  border-radius: var(--radius); color: var(--accent);
+  font-size: 12px; font-family: var(--title);
+  letter-spacing: 0.14em; cursor: pointer; transition: all 0.2s; margin-top: 8px;
 }
-.btn-verify:hover:not(:disabled) {
-  background: rgba(74,222,128,0.10);
-  border-color: rgba(74,222,128,0.55);
-  box-shadow: 0 0 30px rgba(74,222,128,0.10), 0 0 60px rgba(74,222,128,0.04);
-  color: #ffffff;
+.btn-verify:hover:not(:disabled), .btn-attest:hover:not(:disabled) {
+  background: rgba(74,222,128,0.10); border-color: rgba(74,222,128,0.55);
+  box-shadow: 0 0 30px rgba(74,222,128,0.10); color: #ffffff;
 }
-.btn-verify:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
+.btn-verify:disabled, .btn-attest:disabled { opacity: 0.25; cursor: not-allowed; }
+.btn-verify .spinner, .btn-attest .spinner {
+  display: none; width: 14px; height: 14px;
+  border: 1px solid rgba(74,222,128,0.25); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin 0.7s linear infinite;
 }
-.btn-verify .spinner {
-  display: none;
-  width: 14px; height: 14px;
-  border: 1px solid rgba(74,222,128,0.25);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-.btn-verify.loading .spinner { display: block; }
-.btn-verify.loading .btn-text { opacity: 0.5; }
+.btn-verify.loading .spinner, .btn-attest.loading .spinner { display: block; }
+.btn-verify.loading .btn-text, .btn-attest.loading .btn-text { opacity: 0.5; }
 
 /* ── Progress bar ────────────────────────────────────────────────────────── */
-.progress-wrap {
-  margin-top: 16px;
-  display: none;
-}
+.progress-wrap { margin-top: 16px; display: none; }
 .progress-wrap.visible { display: block; }
-.progress-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  font-family: var(--mono);
-  letter-spacing: 0.06em;
-}
-.progress-bar-track {
-  height: 2px;
-  background: var(--surface2);
-  border-radius: 1px;
-  overflow: hidden;
-}
+.progress-label { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.06em; }
+.progress-bar-track { height: 2px; background: var(--surface2); border-radius: 1px; overflow: hidden; }
 .progress-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--accent), rgba(74,222,128,0.4));
-  border-radius: 1px;
-  transition: width 0.1s linear;
-  width: 0%;
+  border-radius: 1px; transition: width 0.15s linear; width: 0%;
   box-shadow: 0 0 8px rgba(74,222,128,0.5);
 }
 
-/* ── Results panel ───────────────────────────────────────────────────────── */
-#results {
-  display: none;
-  animation: fadein 0.4s ease;
-}
+/* ── Results (verify) ────────────────────────────────────────────────────── */
+#results { display: none; animation: fadein 0.4s ease; }
 #results.visible { display: block; }
 
-/* ── Check row ───────────────────────────────────────────────────────────── */
 .check-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
   animation: slidein 0.25s ease both;
 }
 .check-row:last-child { border-bottom: none; }
 
 .check-icon {
-  width: 26px; height: 26px;
-  border-radius: var(--radius-sm);
+  width: 26px; height: 26px; border-radius: var(--radius-sm);
   display: grid; place-items: center;
-  flex-shrink: 0;
-  font-size: 12px;
-  margin-top: 1px;
-  font-family: var(--mono);
+  flex-shrink: 0; font-size: 12px; margin-top: 1px; font-family: var(--mono);
 }
 .check-icon.ok   { background: rgba(74,222,128,0.08);  color: var(--green);  border: 1px solid rgba(74,222,128,0.20); }
-.check-icon.fail { background: rgba(248,113,113,0.08); color: var(--red);   border: 1px solid rgba(248,113,113,0.20); }
-.check-icon.warn { background: rgba(250,204,21,0.08);  color: var(--amber); border: 1px solid rgba(250,204,21,0.20); }
+.check-icon.fail { background: rgba(248,113,113,0.08); color: var(--red);    border: 1px solid rgba(248,113,113,0.20); }
+.check-icon.warn { background: rgba(250,204,21,0.08);  color: var(--amber);  border: 1px solid rgba(250,204,21,0.20); }
 .check-icon.skip { background: var(--surface2);        color: var(--text-muted); border: 1px solid var(--border); }
 
 .check-content { flex: 1; min-width: 0; }
-.check-title   { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; margin-bottom: 4px; }
-.check-detail  { font-size: 11px; color: var(--text-dim); font-family: var(--mono); word-break: break-all; }
-.check-error   { font-size: 11px; color: var(--red); margin-top: 4px; }
+.check-title   { font-size: 12px; letter-spacing: 0.04em; margin-bottom: 4px; }
+.check-detail  { font-size: 11px; color: var(--text-dim); word-break: break-all; }
 
-/* ── Hash display ────────────────────────────────────────────────────────── */
 .hash-value {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 3px 8px;
-  margin-top: 4px;
-  word-break: break-all;
-  display: block;
+  font-size: 10px; color: var(--text-muted);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 3px 8px; margin-top: 4px;
+  word-break: break-all; display: block;
 }
-.hash-value.match {
-  border-color: rgba(74,222,128,0.20);
-  color: var(--green);
-  background: rgba(74,222,128,0.05);
-}
-.hash-value.mismatch {
-  border-color: rgba(248,113,113,0.20);
-  color: var(--red);
-  background: rgba(248,113,113,0.05);
-}
+.hash-value.match   { border-color: rgba(74,222,128,0.20);  color: var(--green); background: rgba(74,222,128,0.05); }
+.hash-value.mismatch{ border-color: rgba(248,113,113,0.20); color: var(--red);   background: rgba(248,113,113,0.05); }
 
 /* ── Trust badge ─────────────────────────────────────────────────────────── */
-.trust-badge {
-  margin-top: 20px;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  animation: fadein 0.5s ease 0.2s both;
-}
-
-.badge-header {
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+.trust-badge { margin-top: 20px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); animation: fadein 0.5s ease 0.2s both; }
+.badge-header { padding: 20px 24px; display: flex; align-items: center; gap: 14px; }
 .badge-header.trusted { background: rgba(74,222,128,0.06);  border-bottom: 1px solid rgba(74,222,128,0.15); }
 .badge-header.peer    { background: rgba(250,204,21,0.05);  border-bottom: 1px solid rgba(250,204,21,0.15); }
 .badge-header.self    { background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.06); }
 .badge-header.unknown { background: rgba(248,113,113,0.05); border-bottom: 1px solid rgba(248,113,113,0.15); }
-
-.badge-icon {
-  width: 46px; height: 46px;
-  border-radius: var(--radius);
-  display: grid; place-items: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
+.badge-icon { width: 46px; height: 46px; border-radius: var(--radius); display: grid; place-items: center; font-size: 20px; flex-shrink: 0; }
 .trusted  .badge-icon { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.20); }
 .peer     .badge-icon { background: rgba(250,204,21,0.08); border: 1px solid rgba(250,204,21,0.20); }
 .self     .badge-icon { background: var(--surface2);       border: 1px solid var(--border); }
 .unknown  .badge-icon { background: rgba(248,113,113,0.08);border: 1px solid rgba(248,113,113,0.20); }
-
 .badge-meta { flex: 1; min-width: 0; }
-.badge-developer {
-  font-family: var(--title);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: #ffffff;
-}
-.badge-artifact  { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
-
-.badge-level {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  padding: 5px 12px;
-  border-radius: var(--radius-sm);
-}
+.badge-developer { font-family: var(--title); font-size: 16px; font-weight: 700; letter-spacing: 0.06em; color: #ffffff; }
+.badge-artifact  { font-size: 11px; color: var(--text-muted); }
+.badge-level { font-size: 10px; letter-spacing: 0.12em; padding: 5px 12px; border-radius: var(--radius-sm); }
 .trusted .badge-level { background: rgba(74,222,128,0.08); color: var(--green); border: 1px solid rgba(74,222,128,0.20); }
 .peer    .badge-level { background: rgba(250,204,21,0.08); color: var(--amber); border: 1px solid rgba(250,204,21,0.20); }
 .self    .badge-level { background: var(--surface2);       color: var(--text-muted); border: 1px solid var(--border); }
 .unknown .badge-level { background: rgba(248,113,113,0.08);color: var(--red);   border: 1px solid rgba(248,113,113,0.20); }
-
-.badge-body { padding: 0; background: rgba(255,255,255,0.01); }
-
-.badge-section {
-  padding: 16px 24px;
-  border-bottom: 1px solid var(--border);
-}
+.badge-body { background: rgba(255,255,255,0.01); }
+.badge-section { padding: 16px 24px; border-bottom: 1px solid var(--border); }
 .badge-section:last-child { border-bottom: none; }
-.badge-section-title {
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-  font-family: var(--mono);
-}
-
+.badge-section-title { font-size: 9px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: 10px; }
 .social-list { display: flex; flex-wrap: wrap; gap: 8px; }
 .social-chip {
   display: flex; align-items: center; gap: 6px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 5px 10px;
-  font-size: 11px;
-  text-decoration: none;
-  color: var(--text-dim);
-  transition: all 0.15s;
-  font-family: var(--mono);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 5px 10px;
+  font-size: 11px; text-decoration: none; color: var(--text-dim); transition: all 0.15s;
 }
 .social-chip:hover { border-color: rgba(74,222,128,0.40); color: var(--accent); }
-.social-chip .platform-icon { font-size: 12px; }
-
-.attestation-item {
-  display: flex;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 11px;
-  font-family: var(--mono);
-}
+.attestation-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
 .attestation-item:last-child { border-bottom: none; }
 .att-valid   { color: var(--green); }
 .att-invalid { color: var(--red); }
-.att-scope {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 1px 6px;
-  font-size: 10px;
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
+.att-scope   { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1px 6px; font-size: 10px; color: var(--text-muted); flex-shrink: 0; }
 .att-statement { color: var(--text-dim); flex: 1; }
-.att-fp {
-  font-size: 10px;
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-
-.fp-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.fp-value {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  word-break: break-all;
-  flex: 1;
-}
+.att-fp { font-size: 10px; color: var(--text-muted); flex-shrink: 0; }
+.fp-row { display: flex; align-items: center; gap: 8px; }
+.fp-value { font-size: 11px; color: var(--text-muted); word-break: break-all; flex: 1; }
 .copy-btn {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 3px 8px;
-  font-size: 10px;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.15s;
-  flex-shrink: 0;
-  font-family: var(--mono);
-  letter-spacing: 0.06em;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 3px 8px;
+  font-size: 10px; color: var(--text-muted); cursor: pointer; transition: all 0.15s; flex-shrink: 0;
 }
 .copy-btn:hover { border-color: rgba(74,222,128,0.40); color: var(--accent); }
 
-/* ── Separator ───────────────────────────────────────────────────────────── */
+/* ── Section separator ───────────────────────────────────────────────────── */
 .section-sep {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 32px 0;
-  color: var(--text-muted);
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
+  display: flex; align-items: center; gap: 12px;
+  margin: 32px 0; color: var(--text-muted);
+  font-size: 9px; text-transform: uppercase; letter-spacing: 0.16em;
+}
+.section-sep::before, .section-sep::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── ATTEST — Field group ────────────────────────────────────────────────── */
+.field-group { margin-bottom: 14px; }
+.field-group:last-child { margin-bottom: 0; }
+.field-group label {
+  display: block; font-size: 10px; color: var(--text-muted);
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.10em;
+}
+.field-note { font-size: 9px; text-transform: none; letter-spacing: 0; opacity: 0.7; }
+.field-group input[type="text"],
+.field-group input[type="password"],
+.field-group textarea,
+.field-group select {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text);
+  font-family: var(--mono); font-size: 12px; padding: 10px 14px;
+  transition: border-color 0.2s; outline: none; resize: vertical;
+}
+.field-group input:focus, .field-group textarea:focus, .field-group select:focus {
+  border-color: rgba(74,222,128,0.50); box-shadow: 0 0 0 3px rgba(74,222,128,0.06);
+}
+.field-group select {
+  cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.3)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
+}
+.field-group textarea { min-height: 72px; }
+.field-group input::placeholder, .field-group textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+/* ── ATTEST — Key drop zone ──────────────────────────────────────────────── */
+.key-drop-zone {
+  border: 1px dashed rgba(255,255,255,0.10); border-radius: var(--radius);
+  padding: 28px 24px; text-align: center; cursor: pointer;
+  transition: all 0.25s; position: relative; background: var(--surface2);
+}
+.key-drop-zone:hover, .key-drop-zone.drag-over {
+  border-color: var(--accent); background: rgba(74,222,128,0.03);
+}
+.key-drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.key-drop-zone .drop-icon { font-size: 24px; display: block; margin-bottom: 8px; opacity: 0.6; }
+.key-drop-zone .drop-title { font-size: 12px; color: var(--text); margin-bottom: 4px; letter-spacing: 0.04em; }
+.key-drop-zone .drop-hint { font-size: 11px; color: var(--text-muted); }
+.link-text { color: var(--accent); }
+
+/* ── ATTEST — Key info ───────────────────────────────────────────────────── */
+.key-info {
+  background: rgba(74,222,128,0.05); border: 1px solid rgba(74,222,128,0.20);
+  border-radius: var(--radius); padding: 14px 16px;
+}
+.key-info-row { display: flex; align-items: center; gap: 12px; }
+.key-info-icon { font-size: 20px; flex-shrink: 0; }
+.key-info-name { font-size: 12px; color: var(--text); }
+.key-info-fp   { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.remove-btn {
+  margin-left: auto; background: none; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text-muted);
+  font-size: 11px; padding: 3px 8px; cursor: pointer; flex-shrink: 0;
   font-family: var(--mono);
 }
-.section-sep::before,
-.section-sep::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
+.remove-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ── ATTEST — Or divider ─────────────────────────────────────────────────── */
+.or-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 14px 0; color: var(--text-muted);
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
 }
+.or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── ATTEST — Secondary button ───────────────────────────────────────────── */
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text-dim); font-size: 11px; font-family: var(--mono);
+  letter-spacing: 0.06em; cursor: pointer; transition: all 0.15s;
+}
+.btn-secondary:hover { border-color: rgba(74,222,128,0.30); color: var(--accent); }
+.btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── ATTEST — Keygen inline form ─────────────────────────────────────────── */
+.keygen-form {
+  margin-top: 14px; padding: 16px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* ── ATTEST — Result panel ───────────────────────────────────────────────── */
+.attest-result {
+  margin-top: 16px; padding: 20px;
+  border-radius: var(--radius); border: 1px solid var(--border);
+  background: var(--surface); animation: fadein 0.3s ease;
+}
+.attest-success { display: flex; gap: 14px; align-items: flex-start; }
+.attest-success-icon {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.20);
+  display: grid; place-items: center; color: var(--accent);
+  font-size: 14px; flex-shrink: 0;
+}
+.attest-success-title { font-size: 13px; color: var(--accent); margin-bottom: 4px; }
+.attest-success-detail { font-size: 11px; color: var(--text-dim); margin-bottom: 10px; }
+.attest-link {
+  font-size: 11px; color: var(--accent); text-decoration: none;
+  border: 1px solid rgba(74,222,128,0.20); border-radius: var(--radius-sm);
+  padding: 4px 10px; transition: all 0.15s; display: inline-block;
+}
+.attest-link:hover { background: rgba(74,222,128,0.08); }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 footer {
-  text-align: center;
-  padding: 32px 0;
-  border-top: 1px solid var(--border);
-  margin-top: 64px;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-family: var(--mono);
-  letter-spacing: 0.04em;
+  text-align: center; padding: 32px 0;
+  border-top: 1px solid var(--border); margin-top: 64px;
+  font-size: 11px; color: var(--text-muted); letter-spacing: 0.04em;
 }
 footer a { color: var(--accent); text-decoration: none; }
 footer a:hover { color: #ffffff; }
 
 /* ── Utilities ───────────────────────────────────────────────────────────── */
-.mono { font-family: var(--mono); }
+.mono   { font-family: var(--mono); }
 .hidden { display: none !important; }
 
 /* ── Animations ──────────────────────────────────────────────────────────── */
@@ -671,8 +508,8 @@ footer a:hover { color: #ffffff; }
 @keyframes slidein   { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes spin      { to { transform: rotate(360deg); } }
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 transparent; }
-  50%       { box-shadow: 0 0 12px rgba(74,222,128,0.25); }
+  0%,100% { box-shadow: 0 0 0 0 transparent; }
+  50%      { box-shadow: 0 0 12px rgba(74,222,128,0.25); }
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
@@ -698,90 +535,214 @@ footer a:hover { color: #ffffff; }
     <div class="header-badge">v1.0 · Ed25519 · Web Crypto API</div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <h1>Verify. Without Trust.</h1>
-    <p>Validate the integrity of a binary and its developer's identity,<br>
-       no server, no account, no upload.</p>
-    <div class="zero-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-      Zero Upload — your file never leaves your computer
-    </div>
-  </section>
-
-  <!-- Step 1: Drop files -->
-  <div class="card">
-    <div class="card-title"><span class="step-num">1</span>Drop your files</div>
-
-    <div class="drop-zone" id="dropZone">
-      <input type="file" id="fileInput" multiple accept="*">
-      <span class="drop-icon">📂</span>
-      <div class="drop-title">Drag your files here</div>
-      <div class="drop-hint">
-        Drop your <code>binary</code> + your <code>provenance.json</code><br>
-        or click to browse
-      </div>
-    </div>
-
-    <div class="files-list" id="filesList"></div>
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" id="tabVerify">VERIFY</button>
+    <button class="tab-btn" id="tabAttest">ATTEST</button>
   </div>
 
-  <!-- Step 2: Registry -->
-  <div class="card">
-    <div class="card-title"><span class="step-num">2</span>Community registry (optional)</div>
+  <!-- ═══════════════════════════ VERIFY TAB ═══════════════════════════════ -->
+  <div id="verifyTab">
 
-    <div class="registry-row">
-      <div class="input-wrap">
-        <label>GitHub registry repository</label>
-        <input type="text" id="registryInput"
-          value="Lastexitfromnowhere/open-trust-registry"
-          placeholder="ex: monorg/open-trust-registry"
+    <section class="hero">
+      <h1>Verify. Without Trust.</h1>
+      <p>Validate the integrity of a binary and its developer's identity,<br>
+         no server, no account, no upload.</p>
+      <div class="zero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Zero Upload — your file never leaves your computer
+      </div>
+    </section>
+
+    <div class="card">
+      <div class="card-title"><span class="step-num">1</span>Drop your files</div>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" multiple accept="*">
+        <span class="drop-icon">📂</span>
+        <div class="drop-title">Drag your files here</div>
+        <div class="drop-hint">
+          Drop your <code>binary</code> + your <code>provenance.json</code><br>
+          or click to browse
+        </div>
+      </div>
+      <div class="files-list" id="filesList"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="step-num">2</span>Community registry (optional)</div>
+      <div class="registry-row">
+        <div class="input-wrap">
+          <label>GitHub registry repository</label>
+          <input type="text" id="registryInput"
+            value="Lastexitfromnowhere/open-trust-registry"
+            placeholder="ex: monorg/open-trust-registry"
+            autocomplete="off" spellcheck="false">
+        </div>
+        <label class="toggle-wrap">
+          <div class="toggle" id="registryToggle"></div>
+          <span>Verify online</span>
+        </label>
+      </div>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:10px;">
+        If enabled, the page will query the GitHub API to confirm that your binary's hash
+        matches the entry published in the trust registry.
+      </p>
+    </div>
+
+    <button class="btn-verify" id="btnVerify" disabled>
+      <div class="spinner"></div>
+      <span class="btn-text">▶ &nbsp;VERIFY</span>
+    </button>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-label" id="progressLabel">Computing SHA-256 hash…</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+    </div>
+
+    <section id="results">
+      <div class="section-sep">Verification results</div>
+      <div class="card" id="checksCard">
+        <div class="card-title">Cryptographic checks</div>
+        <div id="checksList"></div>
+      </div>
+      <div id="badgeWrap"></div>
+    </section>
+
+  </div><!-- #verifyTab -->
+
+  <!-- ═══════════════════════════ ATTEST TAB ═══════════════════════════════ -->
+  <div id="attestTab" class="hidden">
+
+    <section class="hero">
+      <h1>Attest a Binary.</h1>
+      <p>Vouch for someone's binary with your Ed25519 signature.<br>
+         Everything happens locally — your key never leaves this page.</p>
+      <div class="zero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Zero Upload — signed locally, posted via GitHub API
+      </div>
+    </section>
+
+    <!-- Card 1: Issue URL -->
+    <div class="card">
+      <div class="card-title"><span class="step-num">1</span>Attestation request URL</div>
+      <div class="field-group">
+        <label>GitHub issue URL</label>
+        <input type="text" id="issueInput"
+          placeholder="https://github.com/owner/open-trust-registry/issues/5"
           autocomplete="off" spellcheck="false">
       </div>
-      <label class="toggle-wrap">
-        <div class="toggle" id="registryToggle"></div>
-        <span>Verify online</span>
-      </label>
-    </div>
-    <p style="font-size:11px; color:var(--text-muted); margin-top:10px;">
-      If enabled, the page will query the GitHub API to confirm that your binary's hash
-      matches the entry published in the trust registry.
-    </p>
-  </div>
-
-  <!-- Verify button -->
-  <button class="btn-verify" id="btnVerify" disabled>
-    <div class="spinner"></div>
-    <span class="btn-text">▶ &nbsp;VERIFY</span>
-  </button>
-
-  <!-- Progress -->
-  <div class="progress-wrap" id="progressWrap">
-    <div class="progress-label" id="progressLabel">Computing SHA-256 hash…</div>
-    <div class="progress-bar-track">
-      <div class="progress-bar-fill" id="progressFill"></div>
-    </div>
-  </div>
-
-  <!-- Results -->
-  <section id="results">
-    <div class="section-sep">Verification results</div>
-
-    <!-- Quick checks -->
-    <div class="card" id="checksCard">
-      <div class="card-title">Cryptographic checks</div>
-      <div id="checksList"></div>
+      <div id="issuePreview" class="hidden" style="font-size:11px;color:var(--accent);margin-top:8px;"></div>
     </div>
 
-    <!-- Trust badge -->
-    <div id="badgeWrap"></div>
-  </section>
+    <!-- Card 2: Key -->
+    <div class="card">
+      <div class="card-title"><span class="step-num">2</span>Your signing key</div>
+
+      <!-- Drop zone -->
+      <div class="key-drop-zone" id="keyDropZone">
+        <input type="file" id="keyFileInput" accept=".json,application/json">
+        <span class="drop-icon">🔑</span>
+        <div class="drop-title">Drop your key.json here</div>
+        <div class="drop-hint">or <span class="link-text">click to browse</span></div>
+      </div>
+
+      <!-- Key loaded info -->
+      <div class="key-info hidden" id="keyInfo">
+        <div class="key-info-row">
+          <span class="key-info-icon">🔑</span>
+          <div>
+            <div class="key-info-name" id="keyInfoName">Key loaded</div>
+            <div class="key-info-fp" id="keyInfoFp"></div>
+          </div>
+          <button class="remove-btn" id="removeKeyBtn">✕ remove</button>
+        </div>
+      </div>
+
+      <!-- Or / generate -->
+      <div class="or-divider" id="orDivider"><span>or</span></div>
+
+      <div id="keygenSection">
+        <button class="btn-secondary" id="btnShowKeygen">⊕ Generate a new key</button>
+        <div class="keygen-form hidden" id="keygenForm">
+          <div class="field-group">
+            <label>Your display name</label>
+            <input type="text" id="keygenName" placeholder="Alice">
+          </div>
+          <div class="field-group">
+            <label>Passphrase</label>
+            <input type="password" id="keygenPass" placeholder="Strong passphrase">
+          </div>
+          <div class="field-group">
+            <label>Confirm passphrase</label>
+            <input type="password" id="keygenPassConfirm" placeholder="Repeat passphrase">
+          </div>
+          <button class="btn-secondary" id="btnGenerate" style="margin-top:4px;">
+            ⬇ Generate &amp; Download identity.key.json
+          </button>
+          <p style="font-size:10px;color:var(--text-muted);margin-top:8px;">
+            Your key is generated locally and encrypted with Argon2id + AES-256-GCM.
+            It is compatible with the open-trust CLI.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Attestation details -->
+    <div class="card">
+      <div class="card-title"><span class="step-num">3</span>Attestation details</div>
+
+      <div class="field-group">
+        <label>Your statement</label>
+        <textarea id="attestStatement"
+          placeholder="I reviewed the source code and it matches this binary"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Scope</label>
+        <select id="attestScope">
+          <option value="source-review">source-review — I verified the source code</option>
+          <option value="binary-test">binary-test — I tested the binary directly</option>
+          <option value="identity-check">identity-check — I verified the developer's identity</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Key passphrase</label>
+        <input type="password" id="attestPass" placeholder="Passphrase for your key.json">
+      </div>
+
+      <div class="field-group">
+        <label>GitHub token
+          <span class="field-note"> · needs <code style="font-size:9px;">public_repo</code> scope · never leaves your browser</span>
+        </label>
+        <input type="password" id="attestToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+      </div>
+    </div>
+
+    <!-- Attest button -->
+    <button class="btn-attest" id="btnAttest" disabled>
+      <div class="spinner"></div>
+      <span class="btn-text">▶ &nbsp;ATTEST</span>
+    </button>
+
+    <!-- Progress -->
+    <div class="progress-wrap" id="attestProgressWrap">
+      <div class="progress-label" id="attestProgressLabel">Initializing…</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="attestProgressFill"></div></div>
+    </div>
+
+    <!-- Result -->
+    <div class="attest-result hidden" id="attestResult"></div>
+
+  </div><!-- #attestTab -->
 
 </div><!-- .wrapper -->
 
-<!-- Footer -->
 <footer>
   <p>
     <strong>OPEN-TRUST</strong> is open-source · No data is sent to any server ·
@@ -790,21 +751,91 @@ footer a:hover { color: #ffffff; }
   </p>
   <p style="margin-top:6px;">
     <a href="https://github.com/Lastexitfromnowhere/open-trust-cli" target="_blank">GitHub</a> ·
-    CLI: <code style="font-family:var(--mono);font-size:11px;">open-trust verify ./binary</code>
+    CLI: <code style="font-size:11px;">open-trust verify ./binary</code>
   </p>
 </footer>
 
 <script>
 'use strict';
 
-// ── State ─────────────────────────────────────────────────────────────────────
-const state = {
-  binaryFile:     null,
-  provenanceFile: null,
-  registryOn:     false,
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHARED HELPERS
+═══════════════════════════════════════════════════════════════════════════ */
+
+const hexEncode = buf =>
+  Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+
+const base64urlDecode = str => {
+  str = str.replace(/-/g,'+').replace(/_/g,'/');
+  while (str.length % 4) str += '=';
+  return Uint8Array.from(atob(str), c => c.charCodeAt(0));
 };
 
-// ── DOM refs ──────────────────────────────────────────────────────────────────
+const base64urlEncode = bytes => {
+  let bin = '';
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+};
+
+function nowUTC() {
+  return new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+}
+
+function formatSize(n) {
+  if (n >= 1e9) return (n/1e9).toFixed(1)+' GB';
+  if (n >= 1e6) return (n/1e6).toFixed(1)+' MB';
+  if (n >= 1e3) return (n/1e3).toFixed(1)+' KB';
+  return n+' B';
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAB SWITCHING
+═══════════════════════════════════════════════════════════════════════════ */
+
+const tabVerify  = document.getElementById('tabVerify');
+const tabAttest  = document.getElementById('tabAttest');
+const verifyTab  = document.getElementById('verifyTab');
+const attestTab  = document.getElementById('attestTab');
+
+let argon2Ready = false;
+
+tabVerify.addEventListener('click', () => switchTab('verify'));
+tabAttest.addEventListener('click', () => switchTab('attest'));
+
+async function switchTab(tab) {
+  if (tab === 'attest') {
+    verifyTab.classList.add('hidden');
+    attestTab.classList.remove('hidden');
+    tabVerify.classList.remove('active');
+    tabAttest.classList.add('active');
+    if (!argon2Ready) loadArgon2();
+  } else {
+    attestTab.classList.add('hidden');
+    verifyTab.classList.remove('hidden');
+    tabAttest.classList.remove('active');
+    tabVerify.classList.add('active');
+  }
+}
+
+function loadArgon2() {
+  return new Promise((resolve, reject) => {
+    if (window.argon2) { argon2Ready = true; resolve(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/argon2-browser@1.18.0/dist/argon2-bundled.min.js';
+    s.onload = () => { argon2Ready = true; resolve(); };
+    s.onerror = () => reject(new Error('Failed to load Argon2 library'));
+    document.head.appendChild(s);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VERIFY TAB
+═══════════════════════════════════════════════════════════════════════════ */
+
+const verifyState = { binaryFile: null, provenanceFile: null, registryOn: false };
+
 const dropZone       = document.getElementById('dropZone');
 const fileInput      = document.getElementById('fileInput');
 const filesList      = document.getElementById('filesList');
@@ -818,29 +849,10 @@ const results        = document.getElementById('results');
 const checksList     = document.getElementById('checksList');
 const badgeWrap      = document.getElementById('badgeWrap');
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-const hexEncode = buf =>
-  Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-
-const base64urlDecode = str => {
-  str = str.replace(/-/g,'+').replace(/_/g,'/');
-  while (str.length % 4) str += '=';
-  return Uint8Array.from(atob(str), c => c.charCodeAt(0));
-};
-
-function formatSize(n) {
-  if (n >= 1e9) return (n/1e9).toFixed(1)+' GB';
-  if (n >= 1e6) return (n/1e6).toFixed(1)+' MB';
-  if (n >= 1e3) return (n/1e3).toFixed(1)+' KB';
-  return n+' B';
-}
-
 async function readFileAsArrayBuffer(file, onProgress) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onprogress = e => {
-      if (e.lengthComputable && onProgress) onProgress(e.loaded, e.total);
-    };
+    reader.onprogress = e => { if (e.lengthComputable && onProgress) onProgress(e.loaded, e.total); };
     reader.onload  = e => resolve(e.target.result);
     reader.onerror = () => reject(reader.error);
     reader.readAsArrayBuffer(file);
@@ -848,15 +860,12 @@ async function readFileAsArrayBuffer(file, onProgress) {
 }
 
 async function sha256ofBytes(bytes) {
-  const buf = await crypto.subtle.digest('SHA-256', bytes);
-  return hexEncode(buf);
+  return hexEncode(await crypto.subtle.digest('SHA-256', bytes));
 }
 
-// ── File detection ────────────────────────────────────────────────────────────
 async function detectFileType(file) {
   try {
-    const text = await file.slice(0, 4096).text();
-    const obj = JSON.parse(text);
+    const obj = JSON.parse(await file.slice(0, 4096).text());
     if (obj.schema_version && obj.artifact && obj.signature) return 'provenance';
     return 'unknown';
   } catch { return 'binary'; }
@@ -865,11 +874,8 @@ async function detectFileType(file) {
 async function handleFiles(files) {
   for (const file of files) {
     const type = await detectFileType(file);
-    if (type === 'provenance') {
-      state.provenanceFile = file;
-    } else {
-      state.binaryFile = file;
-    }
+    if (type === 'provenance') verifyState.provenanceFile = file;
+    else verifyState.binaryFile = file;
   }
   renderFilesPills();
   updateVerifyBtn();
@@ -877,398 +883,605 @@ async function handleFiles(files) {
 
 function renderFilesPills() {
   filesList.innerHTML = '';
-  if (state.binaryFile) {
-    filesList.innerHTML += filePill(state.binaryFile, 'binary', '⬡');
-  }
-  if (state.provenanceFile) {
-    filesList.innerHTML += filePill(state.provenanceFile, 'provenance', '📄');
-  }
+  if (verifyState.binaryFile)    filesList.innerHTML += filePill(verifyState.binaryFile, 'binary', '⬡');
+  if (verifyState.provenanceFile) filesList.innerHTML += filePill(verifyState.provenanceFile, 'provenance', '📄');
 }
 
 function filePill(f, type, icon) {
-  return `<div class="file-pill type-${type}">
-    <span class="dot"></span>${icon} ${f.name} <span style="opacity:.5">(${formatSize(f.size)})</span>
-  </div>`;
+  return `<div class="file-pill type-${type}"><span class="dot"></span>${icon} ${f.name} <span style="opacity:.5">(${formatSize(f.size)})</span></div>`;
 }
 
 function updateVerifyBtn() {
-  btnVerify.disabled = !(state.binaryFile && state.provenanceFile);
+  btnVerify.disabled = !(verifyState.binaryFile && verifyState.provenanceFile);
 }
 
-// ── Drag and drop ─────────────────────────────────────────────────────────────
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('drag-over');
-  handleFiles([...e.dataTransfer.files]);
-});
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); handleFiles([...e.dataTransfer.files]); });
 fileInput.addEventListener('change', () => handleFiles([...fileInput.files]));
-
-// ── Registry toggle ───────────────────────────────────────────────────────────
 registryToggle.addEventListener('click', () => {
-  state.registryOn = !state.registryOn;
-  registryToggle.classList.toggle('on', state.registryOn);
+  verifyState.registryOn = !verifyState.registryOn;
+  registryToggle.classList.toggle('on', verifyState.registryOn);
 });
-
-// ── Crypto verification ───────────────────────────────────────────────────────
 
 async function hashFile(file) {
   progressWrap.classList.add('visible');
   progressLabel.textContent = 'Computing SHA-256 + SHA-512…';
   progressFill.style.width = '0%';
-
   const buffer = await readFileAsArrayBuffer(file, (loaded, total) => {
-    const pct = (loaded / total * 85).toFixed(0); // leave 15% for digest computation
-    progressFill.style.width = pct + '%';
+    progressFill.style.width = (loaded / total * 85).toFixed(0) + '%';
     progressLabel.textContent = `Hashing… ${formatSize(loaded)} / ${formatSize(total)}`;
   });
-
   progressLabel.textContent = 'Finalizing digests…';
   progressFill.style.width = '90%';
-
-  const [sha256buf, sha512buf] = await Promise.all([
+  const [s256, s512] = await Promise.all([
     crypto.subtle.digest('SHA-256', buffer),
     crypto.subtle.digest('SHA-512', buffer),
   ]);
-
   progressFill.style.width = '100%';
   await sleep(200);
   progressWrap.classList.remove('visible');
-
-  return {
-    sha256: hexEncode(sha256buf),
-    sha512: hexEncode(sha512buf),
-  };
+  return { sha256: hexEncode(s256), sha512: hexEncode(s512) };
 }
 
 async function verifyEd25519(pubkeyB64url, payloadStr, sigB64url) {
-  // Ed25519 support: Chrome 113+, Firefox 116+, Safari 17+
   try {
-    const pubkeyBytes = base64urlDecode(pubkeyB64url);
-    const sigBytes    = base64urlDecode(sigB64url);
-    const msgBytes    = new TextEncoder().encode(payloadStr);
-
-    const key = await crypto.subtle.importKey(
-      'raw', pubkeyBytes, { name: 'Ed25519' }, false, ['verify']
-    );
-    return await crypto.subtle.verify({ name: 'Ed25519' }, key, sigBytes, msgBytes);
-  } catch (e) {
-    // Browser does not support Ed25519 SubtleCrypto
-    if (e.name === 'NotSupportedError' || e.name === 'DOMException') {
-      return null; // null = unsupported (not false = invalid)
-    }
+    const key = await crypto.subtle.importKey('raw', base64urlDecode(pubkeyB64url), {name:'Ed25519'}, false, ['verify']);
+    return await crypto.subtle.verify({name:'Ed25519'}, key, base64urlDecode(sigB64url), new TextEncoder().encode(payloadStr));
+  } catch(e) {
+    if (e.name === 'NotSupportedError' || e.name === 'DOMException') return null;
     throw e;
   }
 }
 
 async function fetchFromGitHub(repo, fingerprint, sha256) {
-  const path = `keys/${fingerprint}/signatures/${sha256}.json`;
-  const url  = `https://api.github.com/repos/${repo}/contents/${path}`;
-  const res  = await fetch(url, { headers: { Accept: 'application/vnd.github.v3+json' } });
+  const url = `https://api.github.com/repos/${repo}/contents/keys/${fingerprint}/signatures/${sha256}.json`;
+  const res = await fetch(url, { headers: { Accept: 'application/vnd.github.v3+json' } });
   if (!res.ok) return null;
-  const data    = await res.json();
-  const content = atob(data.content.replace(/\n/g,''));
-  return JSON.parse(content);
+  const data = await res.json();
+  return JSON.parse(atob(data.content.replace(/\n/g,'')));
 }
 
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-// ── Main verify flow ──────────────────────────────────────────────────────────
 btnVerify.addEventListener('click', async () => {
-  btnVerify.classList.add('loading');
-  btnVerify.disabled = true;
-  results.classList.remove('visible');
-  checksList.innerHTML = '';
-  badgeWrap.innerHTML  = '';
-
-  try {
-    await runVerification();
-  } catch (err) {
-    addCheck('fail', 'Unexpected error', err.message);
-  } finally {
-    btnVerify.classList.remove('loading');
-    btnVerify.disabled = false;
-    results.classList.add('visible');
-  }
+  btnVerify.classList.add('loading'); btnVerify.disabled = true;
+  results.classList.remove('visible'); checksList.innerHTML = ''; badgeWrap.innerHTML = '';
+  try { await runVerification(); }
+  catch(err) { addCheck('fail', 'Unexpected error', err.message); }
+  finally { btnVerify.classList.remove('loading'); btnVerify.disabled = false; results.classList.add('visible'); }
 });
 
 async function runVerification() {
-  // ── Parse provenance ────────────────────────────────────────────────────
   let prov;
-  try {
-    const text = await state.provenanceFile.text();
-    prov = JSON.parse(text);
-  } catch {
-    addCheck('fail', 'Invalid provenance.json',
-      'The file could not be parsed as JSON. Make sure you dropped the correct file.');
-    return;
-  }
+  try { prov = JSON.parse(await verifyState.provenanceFile.text()); }
+  catch { addCheck('fail', 'Invalid provenance.json', 'The file could not be parsed as JSON. Make sure you dropped the correct file.'); return; }
 
-  // ── Hash binary ─────────────────────────────────────────────────────────
-  const { sha256, sha512 } = await hashFile(state.binaryFile);
+  const { sha256, sha512 } = await hashFile(verifyState.binaryFile);
 
-  // ── Check 1: SHA-256 ────────────────────────────────────────────────────
   const sha256ok = sha256 === prov.artifact?.sha256;
-  addCheck(
-    sha256ok ? 'ok' : 'fail',
-    sha256ok ? 'SHA-256 integrity verified' : 'SHA-256 integrity failed',
-    sha256ok
-      ? `The hash matches the one signed by the developer.`
-      : `The binary was modified after signing. Do not install this file.`,
-    [
-      { label: 'Computed', value: sha256, match: sha256ok },
-      { label: 'Signed',   value: prov.artifact?.sha256 ?? '—', match: sha256ok },
-    ]
-  );
-  if (!sha256ok) { finalizeBadge(prov, 0, false); return; }
+  addCheck(sha256ok?'ok':'fail', sha256ok?'SHA-256 integrity verified':'SHA-256 integrity failed',
+    sha256ok ? 'The hash matches the one signed by the developer.'
+             : 'The binary was modified after signing. Do not install this file.',
+    [{ label:'Computed', value:sha256, match:sha256ok }, { label:'Signed', value:prov.artifact?.sha256??'—', match:sha256ok }]);
+  if (!sha256ok) { finalizeBadge(prov,0,false); return; }
 
-  // ── Check 2: SHA-512 ────────────────────────────────────────────────────
   const sha512ok = sha512 === prov.artifact?.sha512;
-  addCheck(
-    sha512ok ? 'ok' : 'fail',
-    sha512ok ? 'SHA-512 integrity verified' : 'SHA-512 integrity failed',
-    sha512ok
-      ? 'Secondary check passed as well.'
-      : 'SHA-512 hash mismatch — the file is compromised.',
-    sha512ok ? [{ label: sha512.slice(0,32)+'…', value: '', match: true }] : []
-  );
+  addCheck(sha512ok?'ok':'fail', sha512ok?'SHA-512 integrity verified':'SHA-512 integrity failed',
+    sha512ok ? 'Secondary check passed as well.' : 'SHA-512 hash mismatch — the file is compromised.',
+    sha512ok ? [{label:sha512.slice(0,32)+'…',value:'',match:true}] : []);
 
-  // ── Check 3: Fingerprint consistency ────────────────────────────────────
   let fpOk = false;
   try {
-    const pubkeyBytes = base64urlDecode(prov.identity?.pubkey_ed25519 ?? '');
-    const computedFP  = await sha256ofBytes(pubkeyBytes);
-    fpOk = computedFP === prov.identity?.pubkey_fingerprint;
-    addCheck(
-      fpOk ? 'ok' : 'fail',
-      fpOk ? 'Key fingerprint consistent' : 'Key fingerprint mismatch',
-      fpOk
-        ? 'The public key matches the fingerprint declared in the manifest.'
-        : 'The manifest was tampered with — key and fingerprint no longer match.'
-    );
+    fpOk = (await sha256ofBytes(base64urlDecode(prov.identity?.pubkey_ed25519??''))) === prov.identity?.pubkey_fingerprint;
+    addCheck(fpOk?'ok':'fail', fpOk?'Key fingerprint consistent':'Key fingerprint mismatch',
+      fpOk ? 'The public key matches the fingerprint declared in the manifest.'
+           : 'The manifest was tampered with — key and fingerprint no longer match.');
   } catch {
-    addCheck('fail', 'Malformed public key', 'Unable to decode the public key from the manifest.');
-    finalizeBadge(prov, 0, false); return;
+    addCheck('fail','Malformed public key','Unable to decode the public key from the manifest.');
+    finalizeBadge(prov,0,false); return;
   }
 
-  // ── Check 4: Ed25519 signature ───────────────────────────────────────────
   const sigPayload = `${prov.artifact.sha256}|${prov.artifact.sha512}|${prov.signature?.timestamp}`;
-  const sigValid   = await verifyEd25519(
-    prov.identity?.pubkey_ed25519,
-    sigPayload,
-    prov.signature?.value
-  );
-
+  const sigValid   = await verifyEd25519(prov.identity?.pubkey_ed25519, sigPayload, prov.signature?.value);
   if (sigValid === null) {
-    addCheck('warn', 'Ed25519 signature (not verified)',
-      'Your browser does not support Ed25519 via WebCrypto (requires Chrome 113+, Firefox 116+, Safari 17+).\n' +
-      'Use the open-trust CLI for full verification.');
+    addCheck('warn','Ed25519 signature (not verified)',
+      'Your browser does not support Ed25519 via WebCrypto (requires Chrome 113+, Firefox 116+, Safari 17+).\nUse the open-trust CLI for full verification.');
   } else {
-    addCheck(
-      sigValid ? 'ok' : 'fail',
-      sigValid ? 'Ed25519 signature valid' : 'Ed25519 signature INVALID',
-      sigValid
-        ? `Signed by ${prov.identity?.display_name ?? 'unknown'} on ${prov.signature?.timestamp ?? '?'}`
-        : 'The cryptographic signature is invalid — the manifest has been forged.\nDo not install this binary.'
-    );
-    if (!sigValid) { finalizeBadge(prov, 0, false); return; }
+    addCheck(sigValid?'ok':'fail', sigValid?'Ed25519 signature valid':'Ed25519 signature INVALID',
+      sigValid ? `Signed by ${prov.identity?.display_name??'unknown'} on ${prov.signature?.timestamp??'?'}`
+               : 'The cryptographic signature is invalid — the manifest has been forged.\nDo not install this binary.');
+    if (!sigValid) { finalizeBadge(prov,0,false); return; }
   }
 
-  // ── Check 5: Attestations ────────────────────────────────────────────────
   const attestations = prov.attestations ?? [];
   const threshold    = prov.trust_chain?.threshold ?? 2;
-  let validAtts      = 0;
-  const attDetails   = [];
-
+  let validAtts = 0; const attDetails = [];
   for (const att of attestations) {
-    const attPayload = `${prov.artifact.sha256}|${att.statement}|${att.timestamp}`;
-    const valid      = await verifyEd25519(att.attester_pubkey, attPayload, att.signature);
+    const valid = await verifyEd25519(att.attester_pubkey, `${prov.artifact.sha256}|${att.statement}|${att.timestamp}`, att.signature);
     if (valid === true) validAtts++;
-    attDetails.push({ ...att, valid });
+    attDetails.push({...att, valid});
   }
-
   if (attestations.length === 0) {
-    addCheck('warn', 'No peer attestations',
-      'This binary has not yet been validated by peers. Trust level: SELF-SIGNED.');
+    addCheck('warn','No peer attestations','This binary has not yet been validated by peers. Trust level: SELF-SIGNED.');
   } else {
     const ok = validAtts >= threshold;
-    addCheck(
-      ok ? 'ok' : 'warn',
-      ok
-        ? `Attestations verified (${validAtts}/${threshold})`
-        : `Insufficient attestations (${validAtts}/${threshold} required)`,
-      ok
-        ? `Trust threshold reached — this artifact is ${colWrap('TRUSTED', 'var(--green)')}.`
-        : `${threshold - validAtts} more peer attestation(s) needed to reach TRUSTED status.`
-    );
+    addCheck(ok?'ok':'warn',
+      ok ? `Attestations verified (${validAtts}/${threshold})` : `Insufficient attestations (${validAtts}/${threshold} required)`,
+      ok ? `Trust threshold reached — this artifact is <span style="color:var(--green);font-weight:700">TRUSTED</span>.`
+         : `${threshold-validAtts} more peer attestation(s) needed to reach TRUSTED status.`);
   }
 
-  // ── Check 6: Registry (optional) ────────────────────────────────────────
   const repo = registryInput.value.trim();
-  if (state.registryOn && repo) {
+  if (verifyState.registryOn && repo) {
     try {
       const remote = await fetchFromGitHub(repo, prov.identity.pubkey_fingerprint, sha256);
-      if (!remote) {
-        addCheck('warn', 'Not found in registry',
-          `No published entry in ${repo} for this hash.\n` +
-          `Publish with: open-trust publish --registry git@github.com:${repo}.git`);
-      } else if (remote.artifact?.sha256 !== sha256) {
-        addCheck('fail', 'Registry mismatch',
-          'The hash in the registry does not match the local file. Security alert.');
-      } else {
-        addCheck('ok', 'Community registry confirmed',
-          `Hash matches the published entry in ${repo}.`);
-      }
-    } catch (e) {
-      addCheck('warn', 'Registry unreachable',
-        `Could not contact the GitHub API: ${e.message}`);
-    }
-  } else if (state.registryOn && !repo) {
-    addCheck('skip', 'Registry not configured',
-      'Enter a GitHub repository URL to enable online verification.');
+      if (!remote)                          addCheck('warn','Not found in registry',`No published entry in ${repo} for this hash.\nPublish with: open-trust publish --registry git@github.com:${repo}.git`);
+      else if (remote.artifact?.sha256 !== sha256) addCheck('fail','Registry mismatch','The hash in the registry does not match the local file. Security alert.');
+      else                                  addCheck('ok','Community registry confirmed',`Hash matches the published entry in ${repo}.`);
+    } catch(e) { addCheck('warn','Registry unreachable',`Could not contact the GitHub API: ${e.message}`); }
+  } else if (verifyState.registryOn && !repo) {
+    addCheck('skip','Registry not configured','Enter a GitHub repository URL to enable online verification.');
   }
 
-  // ── Trust badge ──────────────────────────────────────────────────────────
   finalizeBadge(prov, validAtts, true, attDetails, threshold);
 }
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
-
-function addCheck(status, title, detail, hashes = []) {
-  const icons = { ok:'✓', fail:'✗', warn:'!', skip:'–' };
+function addCheck(status, title, detail, hashes=[]) {
+  const icons = {ok:'✓',fail:'✗',warn:'!',skip:'–'};
+  const colors = {ok:'var(--green)',fail:'var(--red)',warn:'var(--amber)',skip:'var(--text-muted)'};
   const delay = checksList.children.length * 80;
-
   const row = document.createElement('div');
-  row.className = 'check-row';
-  row.style.animationDelay = delay + 'ms';
-
-  let hashesHTML = hashes.map(h =>
-    h.value
-      ? `<div style="margin-top:6px;">
-           <span style="font-size:10px;color:var(--text-muted);font-family:var(--mono);">${h.label}: </span>
-           <code class="hash-value ${h.match?'match':'mismatch'}">${h.value}</code>
-         </div>`
-      : `<span style="font-size:11px;color:var(--text-muted);font-family:var(--mono);">${h.label}</span>`
-  ).join('');
-
-  row.innerHTML = `
-    <div class="check-icon ${status}">${icons[status]}</div>
+  row.className = 'check-row'; row.style.animationDelay = delay+'ms';
+  const hashesHTML = hashes.map(h => h.value
+    ? `<div style="margin-top:6px;"><span style="font-size:10px;color:var(--text-muted)">${h.label}: </span><code class="hash-value ${h.match?'match':'mismatch'}">${h.value}</code></div>`
+    : `<span style="font-size:11px;color:var(--text-muted)">${h.label}</span>`).join('');
+  row.innerHTML = `<div class="check-icon ${status}">${icons[status]}</div>
     <div class="check-content">
-      <div class="check-title" style="color:${statusColor(status)}">${title}</div>
+      <div class="check-title" style="color:${colors[status]}">${title}</div>
       <div class="check-detail">${detail.replace(/\n/g,'<br>')}</div>
       ${hashesHTML}
     </div>`;
-
   checksList.appendChild(row);
 }
 
-function statusColor(s) {
-  return { ok:'var(--green)', fail:'var(--red)', warn:'var(--amber)', skip:'var(--text-muted)' }[s];
-}
+function finalizeBadge(prov, validAtts, checksOk, attDetails=[], threshold=2) {
+  const name=prov.identity?.display_name??'Unknown', artName=prov.artifact?.name??'',
+        artVer=prov.artifact?.version??'', fp=prov.identity?.pubkey_fingerprint??'',
+        ts=prov.signature?.timestamp??'', proofs=prov.identity?.social_proofs??[];
+  let level,levelLabel,icon;
+  if (!checksOk)             { level='unknown'; levelLabel='INVALID';       icon='✗'; }
+  else if (validAtts>=threshold) { level='trusted'; levelLabel='TRUSTED';       icon='✓'; }
+  else if (validAtts>0)      { level='peer';    levelLabel='PEER-ATTESTED'; icon='◐'; }
+  else if (proofs.length>0)  { level='self';    levelLabel='SELF-SIGNED';   icon='◉'; }
+  else                       { level='unknown'; levelLabel='UNKNOWN';       icon='?'; }
 
-function colWrap(text, color) {
-  return `<span style="color:${color};font-weight:700;">${text}</span>`;
-}
-
-function finalizeBadge(prov, validAtts, checksOk, attDetails = [], threshold = 2) {
-  const name    = prov.identity?.display_name ?? 'Inconnu';
-  const artName = prov.artifact?.name ?? '';
-  const artVer  = prov.artifact?.version ?? '';
-  const fp      = prov.identity?.pubkey_fingerprint ?? '';
-  const ts      = prov.signature?.timestamp ?? '';
-  const proofs  = prov.identity?.social_proofs ?? [];
-
-  let level, levelLabel, icon;
-  if (!checksOk) {
-    level = 'unknown'; levelLabel = 'INVALID';  icon = '✗';
-  } else if (validAtts >= threshold) {
-    level = 'trusted'; levelLabel = 'TRUSTED';  icon = '✓';
-  } else if (validAtts > 0) {
-    level = 'peer';    levelLabel = 'PEER-ATTESTED'; icon = '◐';
-  } else if (proofs.length > 0) {
-    level = 'self';    levelLabel = 'SELF-SIGNED'; icon = '◉';
-  } else {
-    level = 'unknown'; levelLabel = 'UNKNOWN';  icon = '?';
-  }
-
-  const socialHTML = proofs.map(sp => {
-    const icons = { github:'🐙', mastodon:'🐘', keybase:'🔑', gitlab:'🦊', twitter:'🐦', x:'✖' };
-    const icon  = icons[sp.platform.toLowerCase()] ?? '🌐';
-    return `<a class="social-chip" href="${sp.proof_url}" target="_blank" rel="noopener">
-      <span class="platform-icon">${icon}</span>${sp.platform} · ${sp.handle}
-    </a>`;
-  }).join('');
-
-  const attsHTML = (attDetails.length === 0)
+  const pIcons={github:'🐙',mastodon:'🐘',keybase:'🔑',gitlab:'🦊',twitter:'🐦',x:'✖'};
+  const socialHTML = proofs.map(sp=>`<a class="social-chip" href="${sp.proof_url}" target="_blank" rel="noopener"><span class="platform-icon">${pIcons[sp.platform?.toLowerCase()]??'🌐'}</span>${sp.platform} · ${sp.handle}</a>`).join('');
+  const attsHTML = attDetails.length===0
     ? '<p style="font-size:11px;color:var(--text-muted)">No attestations.</p>'
-    : attDetails.map(att => `
-      <div class="attestation-item">
-        <span class="${att.valid === true ? 'att-valid' : att.valid === false ? 'att-invalid' : ''}">${att.valid === true ? '✓' : att.valid === false ? '✗' : '~'}</span>
+    : attDetails.map(att=>`<div class="attestation-item">
+        <span class="${att.valid===true?'att-valid':att.valid===false?'att-invalid':''}">${att.valid===true?'✓':att.valid===false?'✗':'~'}</span>
         <span class="att-scope">${att.scope}</span>
         <span class="att-statement">${att.statement}</span>
         <span class="att-fp">${att.attester_fingerprint?.slice(0,12)??''}…</span>
       </div>`).join('');
 
-  badgeWrap.innerHTML = `
-    <div class="trust-badge">
-      <div class="badge-header ${level}">
-        <div class="badge-icon">${
-          level==='trusted'?'🛡️':level==='peer'?'🔍':level==='self'?'🔏':'⚠️'
-        }</div>
-        <div class="badge-meta">
-          <div class="badge-developer">${name}</div>
-          <div class="badge-artifact mono">${artName} ${artVer} · ${ts.slice(0,10)}</div>
-        </div>
-        <div class="badge-level">${icon} ${levelLabel}</div>
+  badgeWrap.innerHTML = `<div class="trust-badge">
+    <div class="badge-header ${level}">
+      <div class="badge-icon">${level==='trusted'?'🛡️':level==='peer'?'🔍':level==='self'?'🔏':'⚠️'}</div>
+      <div class="badge-meta">
+        <div class="badge-developer">${name}</div>
+        <div class="badge-artifact mono">${artName} ${artVer} · ${ts.slice(0,10)}</div>
       </div>
-
-      <div class="badge-body">
-        ${proofs.length > 0 ? `
-        <div class="badge-section">
-          <div class="badge-section-title">Social identity</div>
-          <div class="social-list">${socialHTML}</div>
-        </div>` : ''}
-
-        <div class="badge-section">
-          <div class="badge-section-title">Peer attestations (${validAtts} / ${threshold} required)</div>
-          ${attsHTML}
-        </div>
-
-        <div class="badge-section">
-          <div class="badge-section-title">Key fingerprint</div>
-          <div class="fp-row">
-            <span class="fp-value mono">${fp}</span>
-            <button class="copy-btn" onclick="copyFP('${fp}')">copy</button>
-          </div>
-          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;">
-            Cross-check this fingerprint against the developer's public profile to confirm their identity.
-          </p>
-        </div>
+      <div class="badge-level">${icon} ${levelLabel}</div>
+    </div>
+    <div class="badge-body">
+      ${proofs.length>0?`<div class="badge-section"><div class="badge-section-title">Social identity</div><div class="social-list">${socialHTML}</div></div>`:''}
+      <div class="badge-section"><div class="badge-section-title">Peer attestations (${validAtts} / ${threshold} required)</div>${attsHTML}</div>
+      <div class="badge-section">
+        <div class="badge-section-title">Key fingerprint</div>
+        <div class="fp-row"><span class="fp-value mono">${fp}</span><button class="copy-btn" onclick="copyFP('${fp}')">copy</button></div>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:6px;">Cross-check this fingerprint against the developer's public profile to confirm their identity.</p>
       </div>
-    </div>`;
+    </div>
+  </div>`;
 }
 
 function copyFP(fp) {
   navigator.clipboard.writeText(fp).then(() => {
     const btn = document.querySelector('.copy-btn');
-    if (btn) { btn.textContent = 'copied!'; setTimeout(() => btn.textContent = 'copy', 2000); }
+    if (btn) { btn.textContent='copied!'; setTimeout(()=>btn.textContent='copy',2000); }
   });
 }
 
-// ── Browser Ed25519 support hint ──────────────────────────────────────────────
+// Ed25519 browser support hint
 (async () => {
-  try {
-    const dummy = new Uint8Array(32);
-    await crypto.subtle.importKey('raw', dummy, { name: 'Ed25519' }, false, ['verify']);
-  } catch {
+  try { await crypto.subtle.importKey('raw',new Uint8Array(32),{name:'Ed25519'},false,['verify']); }
+  catch {
     const hint = document.createElement('p');
-    hint.style.cssText = 'text-align:center;font-size:11px;color:var(--amber);padding:8px 0';
-    hint.textContent = '⚠ Your browser does not support Ed25519 SubtleCrypto — ' +
-      'signature verification will be skipped. Use Chrome 113+, Firefox 116+, or Safari 17+.';
-    document.querySelector('.hero').appendChild(hint);
+    hint.style.cssText='text-align:center;font-size:11px;color:var(--amber);padding:8px 0';
+    hint.textContent='⚠ Your browser does not support Ed25519 SubtleCrypto — signature verification will be skipped. Use Chrome 113+, Firefox 116+, or Safari 17+.';
+    document.querySelector('.hero')?.appendChild(hint);
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ATTEST TAB
+═══════════════════════════════════════════════════════════════════════════ */
+
+const attestState = { keystore: null };
+
+const issueInput        = document.getElementById('issueInput');
+const issuePreview      = document.getElementById('issuePreview');
+const keyDropZone       = document.getElementById('keyDropZone');
+const keyFileInput      = document.getElementById('keyFileInput');
+const keyInfo           = document.getElementById('keyInfo');
+const keyInfoName       = document.getElementById('keyInfoName');
+const keyInfoFp         = document.getElementById('keyInfoFp');
+const removeKeyBtn      = document.getElementById('removeKeyBtn');
+const orDivider         = document.getElementById('orDivider');
+const keygenSection     = document.getElementById('keygenSection');
+const btnShowKeygen     = document.getElementById('btnShowKeygen');
+const keygenForm        = document.getElementById('keygenForm');
+const keygenName        = document.getElementById('keygenName');
+const keygenPass        = document.getElementById('keygenPass');
+const keygenPassConfirm = document.getElementById('keygenPassConfirm');
+const btnGenerate       = document.getElementById('btnGenerate');
+const attestStatement   = document.getElementById('attestStatement');
+const attestScope       = document.getElementById('attestScope');
+const attestPass        = document.getElementById('attestPass');
+const attestToken       = document.getElementById('attestToken');
+const btnAttest         = document.getElementById('btnAttest');
+const attestProgressWrap= document.getElementById('attestProgressWrap');
+const attestProgressFill= document.getElementById('attestProgressFill');
+const attestProgressLabel=document.getElementById('attestProgressLabel');
+const attestResult      = document.getElementById('attestResult');
+
+// ── Issue URL input ───────────────────────────────────────────────────────
+function parseIssueURL(url) {
+  const m = url.trim().match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
+  if (!m) return null;
+  return { owner: m[1], repo: m[2], number: parseInt(m[3]) };
+}
+
+issueInput.addEventListener('input', () => {
+  const parsed = parseIssueURL(issueInput.value);
+  if (parsed) {
+    issuePreview.textContent = `✓ Issue #${parsed.number} in ${parsed.owner}/${parsed.repo}`;
+    issuePreview.classList.remove('hidden');
+    issuePreview.style.color = 'var(--accent)';
+  } else if (issueInput.value.length > 10) {
+    issuePreview.textContent = 'Invalid URL — paste a GitHub issue URL';
+    issuePreview.classList.remove('hidden');
+    issuePreview.style.color = 'var(--red)';
+  } else {
+    issuePreview.classList.add('hidden');
+  }
+  updateAttestBtn();
+});
+
+// ── Key drag-and-drop ─────────────────────────────────────────────────────
+keyDropZone.addEventListener('dragover', e => { e.preventDefault(); keyDropZone.classList.add('drag-over'); });
+keyDropZone.addEventListener('dragleave', () => keyDropZone.classList.remove('drag-over'));
+keyDropZone.addEventListener('drop', e => { e.preventDefault(); keyDropZone.classList.remove('drag-over'); if(e.dataTransfer.files[0]) loadKeyFile(e.dataTransfer.files[0]); });
+keyFileInput.addEventListener('change', () => { if(keyFileInput.files[0]) loadKeyFile(keyFileInput.files[0]); });
+
+async function loadKeyFile(file) {
+  try {
+    const ks = JSON.parse(await file.text());
+    if (ks.algorithm !== 'argon2id+aes256gcm' || !ks.salt || !ks.ciphertext) {
+      throw new Error('Not a valid open-trust key file');
+    }
+    setKeyLoaded(ks, file.name);
+  } catch(e) {
+    alert('Invalid key file: ' + e.message);
+  }
+}
+
+function setKeyLoaded(ks, filename) {
+  attestState.keystore = ks;
+  keyDropZone.classList.add('hidden');
+  orDivider.classList.add('hidden');
+  keygenSection.classList.add('hidden');
+  keyInfo.classList.remove('hidden');
+  keyInfoName.textContent = filename || 'Key loaded';
+  keyInfoFp.textContent = 'Fingerprint: ' + ks.fingerprint.slice(0,16) + '…';
+  updateAttestBtn();
+}
+
+removeKeyBtn.addEventListener('click', () => {
+  attestState.keystore = null;
+  keyInfo.classList.add('hidden');
+  keyDropZone.classList.remove('hidden');
+  orDivider.classList.remove('hidden');
+  keygenSection.classList.remove('hidden');
+  keyFileInput.value = '';
+  updateAttestBtn();
+});
+
+// ── Keygen ────────────────────────────────────────────────────────────────
+btnShowKeygen.addEventListener('click', () => {
+  keygenForm.classList.toggle('hidden');
+  btnShowKeygen.textContent = keygenForm.classList.contains('hidden')
+    ? '⊕ Generate a new key'
+    : '✕ Cancel';
+});
+
+btnGenerate.addEventListener('click', async () => {
+  const name        = keygenName.value.trim();
+  const pass        = keygenPass.value;
+  const passConfirm = keygenPassConfirm.value;
+  if (!name)             { alert('Enter a display name'); return; }
+  if (!pass)             { alert('Enter a passphrase'); return; }
+  if (pass !== passConfirm) { alert('Passphrases do not match'); return; }
+
+  btnGenerate.disabled = true;
+  btnGenerate.textContent = 'Generating… (this takes a few seconds)';
+
+  try {
+    if (!argon2Ready) await loadArgon2();
+    const { keystore } = await generateKeyInBrowser(name, pass);
+
+    // Download
+    const blob = new Blob([JSON.stringify(keystore, null, 2)], {type:'application/json'});
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = 'identity.key.json'; a.click();
+    URL.revokeObjectURL(url);
+
+    // Auto-load
+    setKeyLoaded(keystore, 'identity.key.json');
+    keygenForm.classList.add('hidden');
+
+  } catch(e) {
+    alert('Key generation failed: ' + e.message);
+  } finally {
+    btnGenerate.disabled = false;
+    btnGenerate.textContent = '⬇ Generate & Download identity.key.json';
+  }
+});
+
+// ── Attest button state ───────────────────────────────────────────────────
+[issueInput, attestStatement, attestPass, attestToken].forEach(el =>
+  el.addEventListener('input', updateAttestBtn));
+
+function updateAttestBtn() {
+  btnAttest.disabled = !(
+    parseIssueURL(issueInput.value) &&
+    attestState.keystore &&
+    attestStatement.value.trim().length > 0 &&
+    attestPass.value.length > 0 &&
+    attestToken.value.trim().length > 0
+  );
+}
+
+// ── Attest flow ───────────────────────────────────────────────────────────
+btnAttest.addEventListener('click', async () => {
+  btnAttest.classList.add('loading');
+  btnAttest.disabled = true;
+  attestResult.classList.add('hidden');
+  attestProgressWrap.classList.add('visible');
+  attestProgressFill.style.width = '0%';
+
+  try {
+    await runAttestation();
+  } catch(e) {
+    showAttestError(e.message);
+  } finally {
+    btnAttest.classList.remove('loading');
+    btnAttest.disabled = false;
+    await sleep(400);
+    attestProgressWrap.classList.remove('visible');
+    attestProgressFill.style.width = '0%';
+  }
+});
+
+function setAttestProgress(label, pct) {
+  attestProgressLabel.textContent = label;
+  attestProgressFill.style.width = pct + '%';
+}
+
+async function runAttestation() {
+  const token     = attestToken.value.trim();
+  const statement = attestStatement.value.trim();
+  const scope     = attestScope.value;
+  const passphrase= attestPass.value;
+
+  // 1. Fetch provenance.json from GitHub issue
+  setAttestProgress('Fetching issue from GitHub…', 15);
+  const { provenance, owner, repo, number } = await fetchProvenanceFromIssue(issueInput.value, token);
+
+  // 2. Ensure argon2 is loaded
+  setAttestProgress('Loading cryptographic library…', 25);
+  if (!argon2Ready) await loadArgon2();
+
+  // 3. Decrypt key
+  setAttestProgress('Deriving key (Argon2id)… this takes a few seconds', 40);
+  let keyData;
+  try {
+    keyData = await decryptKeystore(attestState.keystore, passphrase);
+  } catch {
+    throw new Error('Wrong passphrase or corrupted key file. Please try again.');
+  }
+
+  // 4. Guards
+  if (keyData.fingerprint === provenance.identity.pubkey_fingerprint) {
+    throw new Error('Self-attestation is not allowed. You cannot attest your own binary.');
+  }
+  const alreadyDone = (provenance.attestations || []).some(a => a.attester_fingerprint === keyData.fingerprint);
+  if (alreadyDone) {
+    throw new Error('You have already attested this binary with this key.');
+  }
+
+  // 5. Sign
+  setAttestProgress('Signing attestation with Ed25519…', 70);
+  const timestamp = nowUTC();
+  const sigBytes  = await signAttestation(keyData.privateKey, provenance.artifact.sha256, statement, timestamp);
+
+  // 6. Build attestation + append
+  const attestation = {
+    attester_pubkey:      base64urlEncode(keyData.pubkeyBytes),
+    attester_fingerprint: keyData.fingerprint,
+    statement,
+    scope,
+    signature:  base64urlEncode(sigBytes),
+    timestamp,
+  };
+  const updated = { ...provenance, attestations: [...(provenance.attestations || []), attestation] };
+
+  // 7. Post comment
+  setAttestProgress('Posting attestation to GitHub…', 88);
+  const commentURL = await postAttestedComment(owner, repo, number, token, updated, keyData.fingerprint);
+
+  setAttestProgress('Done!', 100);
+  showAttestSuccess(owner, repo, number, commentURL, keyData.fingerprint);
+}
+
+// ── Crypto helpers ────────────────────────────────────────────────────────
+
+async function decryptKeystore(ks, passphrase) {
+  const salt       = base64urlDecode(ks.salt);
+  const nonce      = base64urlDecode(ks.nonce);
+  const ciphertext = base64urlDecode(ks.ciphertext);
+
+  // Argon2id — same params as CLI (time=3, mem=64MiB, parallelism=4, hashLen=32)
+  const argon = await argon2.hash({
+    pass: passphrase, salt,
+    type: argon2.ArgonType.Argon2id,
+    time: 3, mem: 65536, parallelism: 4, hashLen: 32,
+  });
+
+  // AES-256-GCM decrypt
+  const aesKey = await crypto.subtle.importKey('raw', argon.hash, {name:'AES-GCM'}, false, ['decrypt']);
+  const seed   = await crypto.subtle.decrypt({name:'AES-GCM', iv: nonce}, aesKey, ciphertext);
+
+  // Import Ed25519 private key via PKCS8 wrapper (seed at bytes 16-47)
+  const pkcs8 = new Uint8Array([
+    0x30,0x2e,0x02,0x01,0x00,0x30,0x05,0x06,0x03,0x2b,0x65,0x70,0x04,0x22,0x04,0x20,
+    ...new Uint8Array(seed)
+  ]);
+  const privateKey = await crypto.subtle.importKey('pkcs8', pkcs8, {name:'Ed25519'}, false, ['sign']);
+
+  return { privateKey, pubkeyBytes: base64urlDecode(ks.pubkey), fingerprint: ks.fingerprint };
+}
+
+async function signAttestation(privateKey, artifactSHA256, statement, timestamp) {
+  const payload = new TextEncoder().encode(`${artifactSHA256}|${statement}|${timestamp}`);
+  return new Uint8Array(await crypto.subtle.sign({name:'Ed25519'}, privateKey, payload));
+}
+
+async function generateKeyInBrowser(displayName, passphrase) {
+  // 1. Generate Ed25519 keypair
+  const kp = await crypto.subtle.generateKey({name:'Ed25519'}, true, ['sign','verify']);
+
+  // 2. Export public key (32 bytes raw)
+  const pubkeyBytes = new Uint8Array(await crypto.subtle.exportKey('raw', kp.publicKey));
+
+  // 3. Extract seed from PKCS8 (bytes 16-47)
+  const pkcs8 = new Uint8Array(await crypto.subtle.exportKey('pkcs8', kp.privateKey));
+  const seed  = pkcs8.slice(16, 48);
+
+  // 4. Fingerprint = hex(SHA-256(pubkey))
+  const fingerprint = hexEncode(await crypto.subtle.digest('SHA-256', pubkeyBytes));
+
+  // 5. Encrypt seed: Argon2id → AES-256-GCM
+  const salt  = crypto.getRandomValues(new Uint8Array(16));
+  const nonce = crypto.getRandomValues(new Uint8Array(12));
+  const argon = await argon2.hash({
+    pass: passphrase, salt,
+    type: argon2.ArgonType.Argon2id,
+    time: 3, mem: 65536, parallelism: 4, hashLen: 32,
+  });
+  const aesKey     = await crypto.subtle.importKey('raw', argon.hash, {name:'AES-GCM'}, false, ['encrypt']);
+  const ciphertext = new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM', iv: nonce}, aesKey, seed));
+
+  const keystore = {
+    version: '1', algorithm: 'argon2id+aes256gcm',
+    salt:        base64urlEncode(salt),
+    nonce:       base64urlEncode(nonce),
+    ciphertext:  base64urlEncode(ciphertext),
+    pubkey:      base64urlEncode(pubkeyBytes),
+    fingerprint,
+    display_name: displayName,
+  };
+
+  return { keystore, fingerprint };
+}
+
+// ── GitHub API helpers ────────────────────────────────────────────────────
+
+async function fetchProvenanceFromIssue(issueURL, token) {
+  const parsed = parseIssueURL(issueURL);
+  if (!parsed) throw new Error('Invalid GitHub issue URL');
+
+  const res = await fetch(
+    `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/issues/${parsed.number}`,
+    { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' } }
+  );
+  if (res.status === 401) throw new Error('Invalid GitHub token (401 Unauthorized)');
+  if (res.status === 404) throw new Error('Issue not found — check the URL and your token');
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+
+  const data  = await res.json();
+  const match = data.body && data.body.match(/```json\s*\n([\s\S]*?)\n```/);
+  if (!match) throw new Error('No provenance.json found in the issue body');
+
+  let provenance;
+  try { provenance = JSON.parse(match[1]); }
+  catch(e) { throw new Error('Failed to parse provenance.json from issue: ' + e.message); }
+  if (!provenance.artifact || !provenance.identity) throw new Error('The JSON in the issue is not a valid provenance.json');
+
+  return { provenance, owner: parsed.owner, repo: parsed.repo, number: parsed.number };
+}
+
+async function postAttestedComment(owner, repo, number, token, updatedProvenance, attesterFp) {
+  const provJSON = JSON.stringify(updatedProvenance, null, 2);
+  const body =
+    `## ✅ Attestation by \`${attesterFp.slice(0,16)}…\`\n\n` +
+    `I have reviewed and attested this binary.\n\n` +
+    `<details>\n<summary>📄 Updated provenance.json — send this back to the developer</summary>\n\n` +
+    '```json\n' + provJSON + '\n```\n\n</details>';
+
+  const res = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/issues/${number}/comments`,
+    {
+      method: 'POST',
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body })
+    }
+  );
+  if (!res.ok) throw new Error(`Failed to post comment: ${res.status}`);
+  return (await res.json()).html_url;
+}
+
+// ── Result display ────────────────────────────────────────────────────────
+
+function showAttestSuccess(owner, repo, number, commentURL, fingerprint) {
+  attestResult.classList.remove('hidden');
+  attestResult.innerHTML = `
+    <div class="attest-success">
+      <div class="attest-success-icon">✓</div>
+      <div>
+        <div class="attest-success-title">Attestation published!</div>
+        <div class="attest-success-detail">
+          Your signature was computed locally and posted as a comment on issue #${number} in ${owner}/${repo}.
+          <br>The developer can now copy the updated provenance.json from your comment.
+        </div>
+        <a href="${commentURL}" target="_blank" class="attest-link">View comment on GitHub →</a>
+      </div>
+    </div>`;
+}
+
+function showAttestError(message) {
+  attestResult.classList.remove('hidden');
+  attestResult.innerHTML = `
+    <div class="check-row" style="border:none;padding:0">
+      <div class="check-icon fail">✗</div>
+      <div class="check-content">
+        <div class="check-title" style="color:var(--red)">Attestation failed</div>
+        <div class="check-detail">${message}</div>
+      </div>
+    </div>`;
+}
 </script>
 </body>
 </html>
