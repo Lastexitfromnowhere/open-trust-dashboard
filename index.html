@@ -1014,41 +1014,18 @@ footer a:hover { color: #ffffff; }
       </div>
     </div>
 
-    <!-- ⑤ Request attestations -->
-    <div class="sign-step" id="step5">
-      <div class="sign-step-header" data-step="step5">
-        <div class="sign-step-num">5</div>
-        <div style="flex:1">
-          <div class="sign-step-title">REQUEST ATTESTATIONS</div>
-          <div class="sign-step-subtitle">Open a GitHub issue so peers can attest your binary</div>
-        </div>
-        <span class="sign-step-arrow">▶</span>
-      </div>
-      <div class="sign-step-body">
-        <div class="sign-fields">
-          <div class="sign-field" style="flex:3;min-width:260px;">
-            <label>Message (optional)</label>
-            <input type="text" id="s5Msg" placeholder="Tested on Windows 11 and macOS 14…" spellcheck="false">
-          </div>
-        </div>
-        <div class="cmd-block" id="cmd5">
-<span class="cmd-comment"># Creates a GitHub issue in the registry with your provenance.json</span>
-<span class="cmd-comment"># (same token as step 4 — already set in env)</span>
-<span class="cmd-bin">./open-trust</span> <span class="cmd-flag">request-attest</span><span id="c5msg"></span>
-        <button class="btn-copy" data-cmd="cmd5">Copy</button></div>
-        <p class="sign-tip">
-          After running this, your request appears in the <strong>REQUESTS</strong> tab of this dashboard.<br>
-          Share the issue link with developers you trust — they click <strong>Attest →</strong> directly from the site.
-        </p>
-        <div style="margin-top:16px;padding:12px 16px;background:var(--accent-dim);border:1px solid var(--border-hi);border-radius:var(--radius-sm);">
-          <div style="font-size:11px;color:var(--accent);font-family:var(--title);letter-spacing:.08em;margin-bottom:4px;">✓ DONE — What happens next?</div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
-            1. Peers see your request in <strong>REQUESTS</strong> and attest it from their browser<br>
-            2. Once you reach <strong><span id="s5ThreshDisplay">2</span> attestation(s)</strong>, your binary is <strong style="color:var(--accent)">TRUSTED</strong><br>
-            3. Anyone can verify it via the <strong>VERIFY</strong> tab — drag binary + provenance.json
-          </div>
+    <!-- ⑤ Next step callout -->
+    <div style="padding:16px 20px;background:var(--accent-dim);border:1px solid var(--border-hi);border-radius:var(--radius);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="font-size:22px;">✓</div>
+      <div style="flex:1;min-width:200px;">
+        <div style="font-family:var(--title);font-size:11px;letter-spacing:.10em;color:var(--accent);margin-bottom:4px;">DONE — NOW GET ATTESTATIONS</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;">
+          Your <code style="font-family:var(--mono);font-size:10px;background:rgba(74,222,128,0.08);color:var(--accent);padding:1px 5px;border-radius:2px;">provenance.json</code> is published. Head to the <strong>REQUESTS</strong> tab to submit your attestation request — no CLI needed, it's all in the browser.
         </div>
       </div>
+      <button onclick="switchTab('requests')" style="font-family:var(--title);font-size:10px;letter-spacing:.12em;background:var(--accent);color:#000;border:none;border-radius:var(--radius-sm);padding:10px 20px;cursor:pointer;font-weight:700;white-space:nowrap;">
+        GO TO REQUESTS →
+      </button>
     </div>
 
   </div><!-- #signTab -->
@@ -2277,12 +2254,6 @@ document.getElementById('s4Registry').addEventListener('input', function() {
   const r = this.value.trim() || 'https://github.com/Lastexitfromnowhere/open-trust-registry.git';
   signVal('c4reg',     r);
   signVal('c4regUnix', r);
-});
-
-// Step 5 — optional message
-document.getElementById('s5Msg').addEventListener('input', function() {
-  const msg = this.value.trim();
-  signVal('c5msg', msg ? ` \\\n  --message ${q(msg)}` : '');
 });
 
 // Pre-fill token from localStorage into step 4 when tab opens
