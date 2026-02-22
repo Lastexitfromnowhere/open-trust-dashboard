@@ -499,6 +499,86 @@ footer {
 footer a { color: var(--accent); text-decoration: none; }
 footer a:hover { color: #ffffff; }
 
+/* ── Request cards ───────────────────────────────────────────────────────── */
+.req-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  display: flex; align-items: flex-start; gap: 18px;
+  transition: border-color 0.2s;
+  animation: slidein 0.2s ease;
+}
+.req-card:hover { border-color: rgba(74,222,128,0.20); }
+
+.req-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: var(--radius);
+  background: var(--accent-dim);
+  border: 1px solid var(--border-hi);
+  display: grid; place-items: center;
+  font-size: 18px;
+}
+
+.req-body { flex: 1; min-width: 0; }
+
+.req-name {
+  font-family: var(--title);
+  font-size: 13px; font-weight: 700;
+  color: #fff; letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.req-name .req-version {
+  color: var(--accent); font-weight: 400; font-family: var(--mono);
+  font-size: 11px; margin-left: 8px;
+}
+
+.req-meta {
+  font-size: 11px; color: var(--text-muted);
+  display: flex; flex-wrap: wrap; gap: 16px;
+  margin-bottom: 10px;
+}
+.req-meta span { display: flex; align-items: center; gap: 5px; }
+.req-meta code {
+  font-family: var(--mono); font-size: 10px;
+  background: rgba(74,222,128,0.06); color: var(--accent);
+  padding: 1px 5px; border-radius: var(--radius-sm);
+}
+
+.req-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; padding: 2px 9px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+.req-pill.need { border-color: rgba(250,204,21,0.30); color: var(--amber); background: var(--amber-dim); }
+.req-pill.done { border-color: rgba(74,222,128,0.30); color: var(--accent); background: var(--green-dim); }
+
+.req-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+
+.btn-attest-req {
+  font-family: var(--title); font-size: 10px; letter-spacing: 0.10em;
+  background: var(--accent-dim); border: 1px solid var(--border-hi);
+  color: var(--accent); border-radius: var(--radius-sm);
+  padding: 7px 16px; cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.btn-attest-req:hover {
+  background: rgba(74,222,128,0.15);
+  box-shadow: 0 0 12px rgba(74,222,128,0.15);
+}
+
+.req-github-link {
+  font-size: 11px; color: var(--text-muted);
+  text-decoration: none; letter-spacing: 0.04em;
+  transition: color 0.15s;
+}
+.req-github-link:hover { color: var(--text); }
+
 /* ── Utilities ───────────────────────────────────────────────────────────── */
 .mono   { font-family: var(--mono); }
 .hidden { display: none !important; }
@@ -539,6 +619,7 @@ footer a:hover { color: #ffffff; }
   <div class="tabs">
     <button class="tab-btn active" id="tabVerify">VERIFY</button>
     <button class="tab-btn" id="tabAttest">ATTEST</button>
+    <button class="tab-btn" id="tabRequests">REQUESTS</button>
   </div>
 
   <!-- ═══════════════════════════ VERIFY TAB ═══════════════════════════════ -->
@@ -741,6 +822,47 @@ footer a:hover { color: #ffffff; }
 
   </div><!-- #attestTab -->
 
+  <!-- ══════════════════════════ REQUESTS TAB ══════════════════════════════ -->
+  <div id="requestsTab" class="hidden">
+
+    <section class="hero">
+      <h1>Open Attestation Requests.</h1>
+      <p>Browse binaries waiting for peer review.<br>
+         Click <strong>Attest →</strong> to vouch for one with your signature.</p>
+      <div class="zero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+        </svg>
+        Live from the open-trust-registry
+      </div>
+    </section>
+
+    <!-- Registry selector -->
+    <div class="card" style="padding:16px 24px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <label style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);display:block;margin-bottom:5px;">Registry (GitHub repo)</label>
+          <input type="text" id="reqRegistryInput"
+            value="Lastexitfromnowhere/open-trust-registry"
+            style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 12px;outline:none;"
+            spellcheck="false" autocomplete="off">
+        </div>
+        <button id="btnRefreshRequests" class="btn-verify" style="padding:9px 22px;margin:0;align-self:flex-end;font-size:11px;min-width:auto;">
+          <div class="spinner" id="reqSpinner" style="display:none;"></div>
+          <span id="reqBtnText">↻ &nbsp;LOAD</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="reqEmpty" class="hidden" style="text-align:center;padding:60px 0;color:var(--text-muted);font-size:13px;">
+      No open attestation requests found.
+    </div>
+    <div id="reqError" class="hidden" style="text-align:center;padding:40px 0;color:var(--red);font-size:13px;"></div>
+
+    <div id="reqList"></div>
+
+  </div><!-- #requestsTab -->
+
 </div><!-- .wrapper -->
 
 <footer>
@@ -794,27 +916,34 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
    TAB SWITCHING
 ═══════════════════════════════════════════════════════════════════════════ */
 
-const tabVerify  = document.getElementById('tabVerify');
-const tabAttest  = document.getElementById('tabAttest');
-const verifyTab  = document.getElementById('verifyTab');
-const attestTab  = document.getElementById('attestTab');
+const tabVerify    = document.getElementById('tabVerify');
+const tabAttest    = document.getElementById('tabAttest');
+const tabRequests  = document.getElementById('tabRequests');
+const verifyTab    = document.getElementById('verifyTab');
+const attestTab    = document.getElementById('attestTab');
+const requestsTab  = document.getElementById('requestsTab');
 
-let argon2Ready = false;
+let argon2Ready    = false;
+let requestsLoaded = false;
 
-tabVerify.addEventListener('click', () => switchTab('verify'));
-tabAttest.addEventListener('click', () => switchTab('attest'));
+tabVerify.addEventListener('click',   () => switchTab('verify'));
+tabAttest.addEventListener('click',   () => switchTab('attest'));
+tabRequests.addEventListener('click', () => switchTab('requests'));
 
 async function switchTab(tab) {
+  [verifyTab, attestTab, requestsTab].forEach(el => el.classList.add('hidden'));
+  [tabVerify, tabAttest, tabRequests].forEach(el => el.classList.remove('active'));
+
   if (tab === 'attest') {
-    verifyTab.classList.add('hidden');
     attestTab.classList.remove('hidden');
-    tabVerify.classList.remove('active');
     tabAttest.classList.add('active');
     if (!argon2Ready) loadArgon2();
+  } else if (tab === 'requests') {
+    requestsTab.classList.remove('hidden');
+    tabRequests.classList.add('active');
+    if (!requestsLoaded) { requestsLoaded = true; fetchRequests(); }
   } else {
-    attestTab.classList.add('hidden');
     verifyTab.classList.remove('hidden');
-    tabAttest.classList.remove('active');
     tabVerify.classList.add('active');
   }
 }
@@ -1481,6 +1610,130 @@ function showAttestError(message) {
         <div class="check-detail">${message}</div>
       </div>
     </div>`;
+}
+
+// ── REQUESTS TAB ──────────────────────────────────────────────────────────
+
+const reqRegistryInput   = document.getElementById('reqRegistryInput');
+const btnRefreshRequests = document.getElementById('btnRefreshRequests');
+const reqSpinner         = document.getElementById('reqSpinner');
+const reqBtnText         = document.getElementById('reqBtnText');
+const reqList            = document.getElementById('reqList');
+const reqEmpty           = document.getElementById('reqEmpty');
+const reqError           = document.getElementById('reqError');
+
+btnRefreshRequests.addEventListener('click', () => {
+  requestsLoaded = true;
+  fetchRequests();
+});
+
+async function fetchRequests() {
+  const slug = reqRegistryInput.value.trim();
+  if (!slug) return;
+
+  // UI: loading state
+  reqSpinner.style.display = '';
+  reqBtnText.textContent   = 'Loading…';
+  btnRefreshRequests.disabled = true;
+  reqList.innerHTML = '';
+  reqEmpty.classList.add('hidden');
+  reqError.classList.add('hidden');
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${slug}/issues?state=open&per_page=100`,
+      { headers: { Accept: 'application/vnd.github.v3+json' } }
+    );
+    if (!res.ok) {
+      if (res.status === 404) throw new Error(`Repository "${slug}" not found or is private.`);
+      throw new Error(`GitHub API error: ${res.status}`);
+    }
+
+    const issues = await res.json();
+    // Filter: only [ATTEST REQUEST] issues
+    const reqs = issues.filter(i => i.title.startsWith('[ATTEST REQUEST]'));
+
+    if (reqs.length === 0) {
+      reqEmpty.classList.remove('hidden');
+    } else {
+      reqs.forEach(issue => reqList.appendChild(buildReqCard(issue)));
+    }
+  } catch (err) {
+    reqError.textContent = err.message;
+    reqError.classList.remove('hidden');
+  } finally {
+    reqSpinner.style.display = 'none';
+    reqBtnText.textContent   = '↻ \u00a0REFRESH';
+    btnRefreshRequests.disabled = false;
+  }
+}
+
+// Parse title: "[ATTEST REQUEST] AppName v1.0.0 — by DisplayName"
+function parseReqTitle(title) {
+  const m = title.match(/^\[ATTEST REQUEST\]\s+(.+?)\s+v([^\s—]+)\s+[—-]+\s+by\s+(.+)$/i);
+  if (m) return { name: m[1], version: m[2], developer: m[3] };
+  // Fallback: strip prefix
+  const stripped = title.replace(/^\[ATTEST REQUEST\]\s*/i, '');
+  return { name: stripped, version: '', developer: '' };
+}
+
+function timeAgo(isoDate) {
+  const diff = Date.now() - new Date(isoDate).getTime();
+  const d = Math.floor(diff / 86400000);
+  if (d === 0) return 'today';
+  if (d === 1) return 'yesterday';
+  if (d < 30)  return `${d} days ago`;
+  const m = Math.floor(d / 30);
+  return `${m} month${m>1?'s':''} ago`;
+}
+
+function buildReqCard(issue) {
+  const { name, version, developer } = parseReqTitle(issue.title);
+  const comments  = issue.comments;
+  const date      = timeAgo(issue.created_at);
+  const issueURL  = issue.html_url;
+
+  // Badge: if comments > 0, show count, else show "Needs attestations"
+  const badgeHTML = comments > 0
+    ? `<span class="req-pill done">✓ ${comments} attestation${comments>1?'s':''}</span>`
+    : `<span class="req-pill need">⏳ No attestations yet</span>`;
+
+  const card = document.createElement('div');
+  card.className = 'req-card';
+  card.innerHTML = `
+    <div class="req-icon">📦</div>
+    <div class="req-body">
+      <div class="req-name">
+        ${escHtml(name)}${version ? `<span class="req-version">v${escHtml(version)}</span>` : ''}
+      </div>
+      <div class="req-meta">
+        ${developer ? `<span>👤 ${escHtml(developer)}</span>` : ''}
+        <span>🕐 ${date}</span>
+        <span>🔗 issue #${issue.number}</span>
+      </div>
+      <div class="req-actions">
+        ${badgeHTML}
+        <button class="btn-attest-req" data-url="${escHtml(issueURL)}">Attest →</button>
+        <a href="${escHtml(issueURL)}" target="_blank" class="req-github-link">View on GitHub ↗</a>
+      </div>
+    </div>`;
+
+  card.querySelector('.btn-attest-req').addEventListener('click', () => {
+    // Pre-fill the ATTEST tab issue URL and switch to it
+    document.getElementById('issueInput').value = issueURL;
+    document.getElementById('issueInput').dispatchEvent(new Event('input'));
+    switchTab('attest');
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  return card;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
