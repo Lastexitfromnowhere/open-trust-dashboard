@@ -528,6 +528,121 @@ footer {
 footer a { color: var(--accent); text-decoration: none; }
 footer a:hover { color: #ffffff; }
 
+/* ── SIGN wizard ─────────────────────────────────────────────────────────── */
+.sign-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.sign-step.active { border-color: rgba(74,222,128,0.30); }
+
+.sign-step-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; cursor: pointer; user-select: none;
+}
+.sign-step-num {
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  background: var(--accent-dim); border: 1px solid var(--border-hi);
+  display: grid; place-items: center;
+  font-size: 11px; color: var(--accent);
+  font-family: var(--title); font-weight: 700;
+  transition: background 0.2s;
+}
+.sign-step.done .sign-step-num {
+  background: rgba(74,222,128,0.20);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.sign-step-num.check::after { content: '✓'; }
+.sign-step-title {
+  font-family: var(--title); font-size: 11px;
+  letter-spacing: 0.12em; color: var(--text);
+  flex: 1;
+}
+.sign-step-subtitle {
+  font-size: 10px; color: var(--text-muted);
+  font-family: var(--mono); letter-spacing: 0.04em;
+}
+.sign-step-arrow {
+  font-size: 10px; color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.sign-step.open .sign-step-arrow { transform: rotate(90deg); }
+
+.sign-step-body {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.sign-step.open .sign-step-body { display: block; }
+
+/* Command block */
+.cmd-block {
+  background: #020202;
+  border: 1px solid rgba(74,222,128,0.15);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin: 14px 0 0;
+  position: relative;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text); line-height: 1.7;
+  white-space: pre-wrap; word-break: break-all;
+}
+.cmd-block .cmd-comment { color: rgba(74,222,128,0.35); }
+.cmd-block .cmd-flag    { color: rgba(74,222,128,0.70); }
+.cmd-block .cmd-val     { color: #e2e8f0; }
+.cmd-block .cmd-bin     { color: var(--accent); font-weight: bold; }
+
+.btn-copy {
+  position: absolute; top: 10px; right: 10px;
+  font-family: var(--mono); font-size: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text-muted); border-radius: var(--radius-sm);
+  padding: 4px 10px; cursor: pointer;
+  transition: all 0.15s; letter-spacing: 0.06em;
+}
+.btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+.btn-copy.copied { border-color: var(--accent); color: var(--accent); }
+
+/* Sign field row */
+.sign-fields {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
+}
+.sign-field {
+  display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 160px;
+}
+.sign-field label {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.10em; color: var(--text-muted);
+}
+.sign-field input, .sign-field select {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text);
+  font-family: var(--mono); font-size: 12px; padding: 8px 12px;
+  outline: none; transition: border-color 0.2s; width: 100%;
+}
+.sign-field input:focus, .sign-field select:focus {
+  border-color: rgba(74,222,128,0.50);
+  box-shadow: 0 0 0 3px rgba(74,222,128,0.06);
+}
+.sign-field input::placeholder { color: var(--text-muted); opacity: 0.45; }
+.sign-field select option { background: #111; }
+
+.sign-tip {
+  font-size: 11px; color: var(--text-muted);
+  margin-top: 10px; line-height: 1.6;
+}
+.sign-tip code {
+  font-family: var(--mono); font-size: 10px;
+  background: rgba(74,222,128,0.07); color: var(--accent);
+  padding: 1px 5px; border-radius: var(--radius-sm);
+}
+.sign-tip a { color: var(--accent); text-decoration: none; }
+.sign-tip a:hover { text-decoration: underline; }
+
 /* ── Request cards ───────────────────────────────────────────────────────── */
 .req-card {
   background: var(--surface);
@@ -675,6 +790,7 @@ footer a:hover { color: #ffffff; }
   <!-- Tabs -->
   <div class="tabs">
     <button class="tab-btn active" id="tabVerify">VERIFY</button>
+    <button class="tab-btn" id="tabSign">SIGN</button>
     <button class="tab-btn" id="tabAttest">ATTEST</button>
     <button class="tab-btn" id="tabRequests">REQUESTS</button>
   </div>
@@ -749,6 +865,193 @@ footer a:hover { color: #ffffff; }
     </section>
 
   </div><!-- #verifyTab -->
+
+  <!-- ════════════════════════════ SIGN TAB ════════════════════════════════ -->
+  <div id="signTab" class="hidden">
+
+    <section class="hero">
+      <h1>Sign your Binary.</h1>
+      <p>Step-by-step CLI wizard — fill in your details,<br>
+         copy the pre-filled commands and run them.</p>
+      <div class="zero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+        </svg>
+        CLI · Ed25519 · Argon2id encryption
+      </div>
+    </section>
+
+    <!-- ① Install -->
+    <div class="sign-step open" id="step1">
+      <div class="sign-step-header" data-step="step1">
+        <div class="sign-step-num">1</div>
+        <div style="flex:1">
+          <div class="sign-step-title">INSTALL THE CLI</div>
+          <div class="sign-step-subtitle">Build from source — Go 1.21+ required</div>
+        </div>
+        <span class="sign-step-arrow">▶</span>
+      </div>
+      <div class="sign-step-body">
+        <div class="sign-fields">
+          <div class="sign-field" style="flex:2;min-width:240px;">
+            <label>Install directory (optional)</label>
+            <input type="text" id="s1Dir" placeholder="~/open-trust-cli" spellcheck="false">
+          </div>
+        </div>
+        <div class="cmd-block" id="cmd1">
+<span class="cmd-comment"># Clone and build</span>
+<span class="cmd-bin">git</span> clone https://github.com/Lastexitfromnowhere/open-trust-cli.git <span id="c1dir" class="cmd-val">~/open-trust-cli</span>
+<span class="cmd-bin">cd</span> <span id="c1dir2" class="cmd-val">~/open-trust-cli</span>
+<span class="cmd-bin">go</span> build -o open-trust .</button>
+        <button class="btn-copy" data-cmd="cmd1">Copy</button></div>
+        <p class="sign-tip">Requires <a href="https://go.dev/dl/" target="_blank">Go 1.21+</a>. The binary <code>open-trust</code> will appear in the directory.</p>
+      </div>
+    </div>
+
+    <!-- ② Keygen -->
+    <div class="sign-step" id="step2">
+      <div class="sign-step-header" data-step="step2">
+        <div class="sign-step-num">2</div>
+        <div style="flex:1">
+          <div class="sign-step-title">CREATE YOUR IDENTITY</div>
+          <div class="sign-step-subtitle">Generate an Ed25519 keypair encrypted with Argon2id</div>
+        </div>
+        <span class="sign-step-arrow">▶</span>
+      </div>
+      <div class="sign-step-body">
+        <p class="sign-tip" style="margin-top:8px;">Skip this step if you already have a <code>.key.json</code> file.</p>
+        <div class="cmd-block" id="cmd2">
+<span class="cmd-comment"># Generates your-name.key.json — keep it safe!</span>
+<span class="cmd-bin">./open-trust</span> <span class="cmd-flag">keygen</span>
+        <button class="btn-copy" data-cmd="cmd2">Copy</button></div>
+        <p class="sign-tip">You will be prompted for a <strong>display name</strong> and a <strong>passphrase</strong>.<br>
+        ⚠️ The passphrase cannot be recovered — write it down somewhere safe.</p>
+      </div>
+    </div>
+
+    <!-- ③ Sign -->
+    <div class="sign-step" id="step3">
+      <div class="sign-step-header" data-step="step3">
+        <div class="sign-step-num">3</div>
+        <div style="flex:1">
+          <div class="sign-step-title">SIGN YOUR BINARY</div>
+          <div class="sign-step-subtitle">Hash + Ed25519 signature → provenance.json</div>
+        </div>
+        <span class="sign-step-arrow">▶</span>
+      </div>
+      <div class="sign-step-body">
+        <div class="sign-fields">
+          <div class="sign-field">
+            <label>App name</label>
+            <input type="text" id="s3Name" placeholder="MyApp" spellcheck="false">
+          </div>
+          <div class="sign-field">
+            <label>Version</label>
+            <input type="text" id="s3Ver" placeholder="1.0.0" spellcheck="false">
+          </div>
+          <div class="sign-field" style="flex:2;min-width:200px;">
+            <label>Binary path</label>
+            <input type="text" id="s3File" placeholder="./myapp.exe" spellcheck="false">
+          </div>
+          <div class="sign-field">
+            <label>Key file</label>
+            <input type="text" id="s3Key" placeholder="./my-name.key.json" spellcheck="false">
+          </div>
+          <div class="sign-field">
+            <label>Attestation threshold</label>
+            <select id="s3Thresh">
+              <option value="1">1 attestation</option>
+              <option value="2" selected>2 attestations (default)</option>
+              <option value="3">3 attestations</option>
+              <option value="5">5 attestations</option>
+            </select>
+          </div>
+        </div>
+        <div class="cmd-block" id="cmd3">
+<span class="cmd-comment"># Signs the binary and writes provenance.json</span>
+<span class="cmd-bin">./open-trust</span> <span class="cmd-flag">sign</span> \
+  <span class="cmd-flag">--name</span>      <span class="cmd-val" id="c3name">"MyApp"</span> \
+  <span class="cmd-flag">--version</span>   <span class="cmd-val" id="c3ver">"1.0.0"</span> \
+  <span class="cmd-flag">--key</span>       <span class="cmd-val" id="c3key">./my-name.key.json</span> \
+  <span class="cmd-flag">--threshold</span> <span class="cmd-val" id="c3thresh">2</span> \
+  <span class="cmd-val" id="c3file">./myapp.exe</span>
+        <button class="btn-copy" data-cmd="cmd3">Copy</button></div>
+        <p class="sign-tip">Output: <code>provenance.json</code> in the current directory. Keep it next to your binary.</p>
+      </div>
+    </div>
+
+    <!-- ④ Publish -->
+    <div class="sign-step" id="step4">
+      <div class="sign-step-header" data-step="step4">
+        <div class="sign-step-num">4</div>
+        <div style="flex:1">
+          <div class="sign-step-title">PUBLISH TO REGISTRY</div>
+          <div class="sign-step-subtitle">Push provenance.json to the public trust registry</div>
+        </div>
+        <span class="sign-step-arrow">▶</span>
+      </div>
+      <div class="sign-step-body">
+        <div class="sign-fields">
+          <div class="sign-field" style="flex:2;min-width:240px;">
+            <label>GitHub token <span style="text-transform:none;letter-spacing:0;font-size:9px;">(public_repo scope)</span></label>
+            <input type="password" id="s4Token" placeholder="ghp_xxxxxxxxxxxx" spellcheck="false" autocomplete="off">
+          </div>
+          <div class="sign-field" style="flex:2;min-width:200px;">
+            <label>Registry</label>
+            <input type="text" id="s4Registry" value="https://github.com/Lastexitfromnowhere/open-trust-registry.git" spellcheck="false">
+          </div>
+        </div>
+        <div class="cmd-block" id="cmd4">
+<span class="cmd-comment"># Windows PowerShell</span>
+<span class="cmd-bin">$env:OPEN_TRUST_GITHUB_TOKEN</span> = <span class="cmd-val" id="c4tokWin">"ghp_xxxxxxxxxxxx"</span>
+<span class="cmd-bin">./open-trust</span> <span class="cmd-flag">publish</span> <span class="cmd-flag">--registry</span> <span class="cmd-val" id="c4reg">https://github.com/Lastexitfromnowhere/open-trust-registry.git</span>
+        <button class="btn-copy" data-cmd="cmd4">Copy</button></div>
+        <div class="cmd-block" id="cmd4b" style="margin-top:8px;">
+<span class="cmd-comment"># macOS / Linux</span>
+<span class="cmd-bin">OPEN_TRUST_GITHUB_TOKEN</span>=<span class="cmd-val" id="c4tokUnix">"ghp_xxxxxxxxxxxx"</span> <span class="cmd-bin">./open-trust</span> <span class="cmd-flag">publish</span> <span class="cmd-flag">--registry</span> <span class="cmd-val" id="c4regUnix">https://github.com/Lastexitfromnowhere/open-trust-registry.git</span>
+        <button class="btn-copy" data-cmd="cmd4b">Copy</button></div>
+        <p class="sign-tip">Create a token at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> → <strong>public_repo</strong> scope only.</p>
+      </div>
+    </div>
+
+    <!-- ⑤ Request attestations -->
+    <div class="sign-step" id="step5">
+      <div class="sign-step-header" data-step="step5">
+        <div class="sign-step-num">5</div>
+        <div style="flex:1">
+          <div class="sign-step-title">REQUEST ATTESTATIONS</div>
+          <div class="sign-step-subtitle">Open a GitHub issue so peers can attest your binary</div>
+        </div>
+        <span class="sign-step-arrow">▶</span>
+      </div>
+      <div class="sign-step-body">
+        <div class="sign-fields">
+          <div class="sign-field" style="flex:3;min-width:260px;">
+            <label>Message (optional)</label>
+            <input type="text" id="s5Msg" placeholder="Tested on Windows 11 and macOS 14…" spellcheck="false">
+          </div>
+        </div>
+        <div class="cmd-block" id="cmd5">
+<span class="cmd-comment"># Creates a GitHub issue in the registry with your provenance.json</span>
+<span class="cmd-comment"># (same token as step 4 — already set in env)</span>
+<span class="cmd-bin">./open-trust</span> <span class="cmd-flag">request-attest</span><span id="c5msg"></span>
+        <button class="btn-copy" data-cmd="cmd5">Copy</button></div>
+        <p class="sign-tip">
+          After running this, your request appears in the <strong>REQUESTS</strong> tab of this dashboard.<br>
+          Share the issue link with developers you trust — they click <strong>Attest →</strong> directly from the site.
+        </p>
+        <div style="margin-top:16px;padding:12px 16px;background:var(--accent-dim);border:1px solid var(--border-hi);border-radius:var(--radius-sm);">
+          <div style="font-size:11px;color:var(--accent);font-family:var(--title);letter-spacing:.08em;margin-bottom:4px;">✓ DONE — What happens next?</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            1. Peers see your request in <strong>REQUESTS</strong> and attest it from their browser<br>
+            2. Once you reach <strong><span id="s5ThreshDisplay">2</span> attestation(s)</strong>, your binary is <strong style="color:var(--accent)">TRUSTED</strong><br>
+            3. Anyone can verify it via the <strong>VERIFY</strong> tab — drag binary + provenance.json
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- #signTab -->
 
   <!-- ═══════════════════════════ ATTEST TAB ═══════════════════════════════ -->
   <div id="attestTab" class="hidden">
@@ -1041,9 +1344,11 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 ═══════════════════════════════════════════════════════════════════════════ */
 
 const tabVerify    = document.getElementById('tabVerify');
+const tabSign      = document.getElementById('tabSign');
 const tabAttest    = document.getElementById('tabAttest');
 const tabRequests  = document.getElementById('tabRequests');
 const verifyTab    = document.getElementById('verifyTab');
+const signTab      = document.getElementById('signTab');
 const attestTab    = document.getElementById('attestTab');
 const requestsTab  = document.getElementById('requestsTab');
 
@@ -1060,14 +1365,18 @@ let argon2Ready    = false;
 let requestsLoaded = false;
 
 tabVerify.addEventListener('click',   () => switchTab('verify'));
+tabSign.addEventListener('click',     () => switchTab('sign'));
 tabAttest.addEventListener('click',   () => switchTab('attest'));
 tabRequests.addEventListener('click', () => switchTab('requests'));
 
 async function switchTab(tab) {
-  [verifyTab, attestTab, requestsTab].forEach(el => el.classList.add('hidden'));
-  [tabVerify, tabAttest, tabRequests].forEach(el => el.classList.remove('active'));
+  [verifyTab, signTab, attestTab, requestsTab].forEach(el => el.classList.add('hidden'));
+  [tabVerify, tabSign, tabAttest, tabRequests].forEach(el => el.classList.remove('active'));
 
-  if (tab === 'attest') {
+  if (tab === 'sign') {
+    signTab.classList.remove('hidden');
+    tabSign.classList.add('active');
+  } else if (tab === 'attest') {
     attestTab.classList.remove('hidden');
     tabAttest.classList.add('active');
     if (!argon2Ready) loadArgon2();
@@ -1895,6 +2204,94 @@ ${JSON.stringify(p, null, 2)}
     submitReqSpinner.style.display = 'none';
     submitReqBtnText.textContent   = '▶ \u00a0OPEN ISSUE';
     btnSubmitReq.disabled          = false;
+  }
+});
+
+// ── SIGN wizard ───────────────────────────────────────────────────────────
+
+// Accordion steps
+document.querySelectorAll('.sign-step-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const step = document.getElementById(header.dataset.step);
+    const isOpen = step.classList.contains('open');
+    // Close all, open clicked
+    document.querySelectorAll('.sign-step').forEach(s => s.classList.remove('open'));
+    if (!isOpen) step.classList.add('open');
+  });
+});
+
+// Copy buttons
+document.querySelectorAll('.btn-copy').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const block = document.getElementById(btn.dataset.cmd);
+    const text  = block.innerText.replace(/^Copy$/m, '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+    });
+  });
+});
+
+// Live command update helpers
+function signVal(id, val) { const el = document.getElementById(id); if (el) el.textContent = val || el.dataset.placeholder || ''; }
+function q(v) { return v.includes(' ') ? `"${v}"` : v; }
+
+// Step 1 — directory
+document.getElementById('s1Dir').addEventListener('input', function() {
+  const d = this.value.trim() || '~/open-trust-cli';
+  signVal('c1dir',  d);
+  signVal('c1dir2', d);
+});
+
+// Step 3 — sign fields
+['s3Name','s3Ver','s3File','s3Key','s3Thresh'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateCmd3);
+  document.getElementById(id).addEventListener('change', updateCmd3);
+});
+function updateCmd3() {
+  const name   = document.getElementById('s3Name').value.trim()   || 'MyApp';
+  const ver    = document.getElementById('s3Ver').value.trim()    || '1.0.0';
+  const file   = document.getElementById('s3File').value.trim()   || './myapp.exe';
+  const key    = document.getElementById('s3Key').value.trim()    || './my-name.key.json';
+  const thresh = document.getElementById('s3Thresh').value;
+  signVal('c3name',   q(name));
+  signVal('c3ver',    q(ver));
+  signVal('c3file',   file);
+  signVal('c3key',    key);
+  signVal('c3thresh', thresh);
+  // Sync threshold to step 5 summary
+  signVal('s5ThreshDisplay', thresh);
+}
+
+// Step 4 — token + registry
+document.getElementById('s4Token').addEventListener('input', function() {
+  const t = this.value.trim() || 'ghp_xxxxxxxxxxxx';
+  signVal('c4tokWin',  `"${t}"`);
+  signVal('c4tokUnix', `"${t}"`);
+  // Sync to shared token
+  syncToken(this.value.trim());
+});
+document.getElementById('s4Registry').addEventListener('input', function() {
+  const r = this.value.trim() || 'https://github.com/Lastexitfromnowhere/open-trust-registry.git';
+  signVal('c4reg',     r);
+  signVal('c4regUnix', r);
+});
+
+// Step 5 — optional message
+document.getElementById('s5Msg').addEventListener('input', function() {
+  const msg = this.value.trim();
+  signVal('c5msg', msg ? ` \\\n  --message ${q(msg)}` : '');
+});
+
+// Pre-fill token from localStorage into step 4 when tab opens
+tabSign.addEventListener('click', () => {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved && !document.getElementById('s4Token').value) {
+    document.getElementById('s4Token').value = saved;
+    signVal('c4tokWin',  `"${saved}"`);
+    signVal('c4tokUnix', `"${saved}"`);
   }
 });
 
