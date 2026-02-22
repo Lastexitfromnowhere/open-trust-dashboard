@@ -82,32 +82,61 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 36px 0 32px;
+  padding: 32px 0 28px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 0;
 }
 
-.logo { display: flex; align-items: center; gap: 14px; }
+.logo { display: flex; align-items: center; gap: 16px; }
 
 .logo-icon {
-  width: 40px; height: 40px;
+  width: 52px; height: 52px;
   border-radius: var(--radius);
-  background: var(--accent-dim);
-  border: 1px solid var(--border-hi);
+  background: linear-gradient(135deg, rgba(74,222,128,0.10) 0%, rgba(74,222,128,0.03) 100%);
+  border: 1px solid rgba(74,222,128,0.35);
   display: grid; place-items: center;
-  font-size: 20px;
-  animation: glow-pulse 2.4s ease-in-out infinite;
+  position: relative;
+  animation: glow-pulse 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.logo-icon::before {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(74,222,128,0.4), transparent 60%);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
 }
 
-.logo-text { display: flex; flex-direction: column; }
+.logo-text {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.logo-team {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 0.20em; color: var(--text-muted);
+  text-transform: uppercase;
+}
 .logo-name {
   font-family: var(--title);
-  font-size: 16px; font-weight: 700;
-  letter-spacing: 0.12em; color: var(--accent);
+  font-size: 13px; font-weight: 900;
+  letter-spacing: 0.18em; color: #ffffff;
+  line-height: 1;
 }
-.logo-tagline {
-  font-size: 10px; color: var(--text-muted);
-  letter-spacing: 0.08em; text-transform: uppercase;
+.logo-name .logo-accent { color: var(--accent); }
+.logo-product {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 0.14em; color: var(--accent);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+}
+.logo-product::before {
+  content: '';
+  display: inline-block; width: 18px; height: 1px;
+  background: var(--accent); opacity: 0.5;
 }
 
 .header-badge {
@@ -606,11 +635,39 @@ footer a:hover { color: #ffffff; }
   <!-- Header -->
   <header>
     <div class="logo">
-      <div class="logo-icon">🔐</div>
-      <div class="logo-text">
-        <span class="logo-name">OPEN-TRUST</span>
-        <span class="logo-tagline">Decentralized Code Signing</span>
+
+      <!-- Icon -->
+      <div class="logo-icon">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer hexagon -->
+          <polygon points="15,2 26,8.5 26,21.5 15,28 4,21.5 4,8.5"
+            stroke="rgba(74,222,128,0.6)" stroke-width="1" fill="none"/>
+          <!-- Inner hexagon -->
+          <polygon points="15,7 21.5,10.75 21.5,18.25 15,22 8.5,18.25 8.5,10.75"
+            stroke="rgba(74,222,128,0.25)" stroke-width="0.75" fill="rgba(74,222,128,0.04)"/>
+          <!-- Shield body -->
+          <path d="M15 9.5 L20 12 L20 17 C20 19.5 15 21.5 15 21.5 C15 21.5 10 19.5 10 17 L10 12 Z"
+            fill="rgba(74,222,128,0.12)" stroke="rgba(74,222,128,0.8)" stroke-width="1" stroke-linejoin="round"/>
+          <!-- Checkmark -->
+          <polyline points="12,15.5 14,17.5 18,13.5"
+            stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Corner accents -->
+          <circle cx="15" cy="2"  r="1" fill="rgba(74,222,128,0.7)"/>
+          <circle cx="26" cy="8.5"  r="1" fill="rgba(74,222,128,0.4)"/>
+          <circle cx="26" cy="21.5" r="1" fill="rgba(74,222,128,0.4)"/>
+          <circle cx="15" cy="28" r="1" fill="rgba(74,222,128,0.7)"/>
+          <circle cx="4"  cy="21.5" r="1" fill="rgba(74,222,128,0.4)"/>
+          <circle cx="4"  cy="8.5"  r="1" fill="rgba(74,222,128,0.4)"/>
+        </svg>
       </div>
+
+      <!-- Text -->
+      <div class="logo-text">
+        <span class="logo-team">Last Paradox · Team</span>
+        <span class="logo-name">OPEN<span class="logo-accent">TRUST</span></span>
+        <span class="logo-product">Sign &amp; Verify</span>
+      </div>
+
     </div>
     <div class="header-badge">v1.0 · Ed25519 · Web Crypto API</div>
   </header>
