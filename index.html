@@ -990,6 +990,15 @@ const verifyTab    = document.getElementById('verifyTab');
 const attestTab    = document.getElementById('attestTab');
 const requestsTab  = document.getElementById('requestsTab');
 
+// Requests browse consts — declared here so fetchRequests() (called from switchTab) can access them
+const reqRegistryInput   = document.getElementById('reqRegistryInput');
+const btnRefreshRequests = document.getElementById('btnRefreshRequests');
+const reqSpinner         = document.getElementById('reqSpinner');
+const reqBtnText         = document.getElementById('reqBtnText');
+const reqList            = document.getElementById('reqList');
+const reqEmpty           = document.getElementById('reqEmpty');
+const reqError           = document.getElementById('reqError');
+
 let argon2Ready    = false;
 let requestsLoaded = false;
 
@@ -1325,6 +1334,7 @@ const btnGenerate       = document.getElementById('btnGenerate');
 const attestStatement   = document.getElementById('attestStatement');
 const attestScope       = document.getElementById('attestScope');
 const attestPass        = document.getElementById('attestPass');
+const attestToken       = document.getElementById('attestToken');
 const btnAttest         = document.getElementById('btnAttest');
 const attestProgressWrap= document.getElementById('attestProgressWrap');
 const attestProgressFill= document.getElementById('attestProgressFill');
@@ -1835,7 +1845,6 @@ ${JSON.stringify(p, null, 2)}
 
 const STORAGE_KEY = 'ot_github_token';
 
-const attestToken         = document.getElementById('attestToken');
 const attestTokenToggle   = document.getElementById('attestTokenToggle');
 const attestTokenRememberRow = document.getElementById('attestTokenRememberRow');
 const reqTokenToggle      = document.getElementById('reqTokenToggle');
@@ -1882,14 +1891,6 @@ reqTokenRememberRow.addEventListener('click', () => {
 });
 
 // ── REQUESTS TAB — Browse list ────────────────────────────────────────────
-
-const reqRegistryInput   = document.getElementById('reqRegistryInput');
-const btnRefreshRequests = document.getElementById('btnRefreshRequests');
-const reqSpinner         = document.getElementById('reqSpinner');
-const reqBtnText         = document.getElementById('reqBtnText');
-const reqList            = document.getElementById('reqList');
-const reqEmpty           = document.getElementById('reqEmpty');
-const reqError           = document.getElementById('reqError');
 
 btnRefreshRequests.addEventListener('click', () => {
   requestsLoaded = true;
