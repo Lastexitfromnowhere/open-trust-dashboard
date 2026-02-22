@@ -1,6 +1,6 @@
 # Open Trust Dashboard 🛡️
 
-> **A decentralized transparency visualizer.** > Part of the [Open Trust](https://github.com/lastexitfromnowhere) ecosystem.
+> **A decentralized transparency visualizer.** > Part of the [Last paradox Team](https://github.com/lastexitfromnowhere) ecosystem.
 
 The **Open Trust Dashboard** is a lightweight, client-side interface designed to provide a transparent alternative to GAFAM-led trust systems and centralized certificate authorities. It serves as the visual layer for the Open Trust Registry, allowing users to verify data integrity and trust indicators without relying on a single third-party provider.
 
