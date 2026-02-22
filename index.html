@@ -2548,8 +2548,8 @@ async function loadExplore() {
       exploreStatus.textContent = '⚠️ Registry is very large — showing partial results. Use a token for best results.';
     }
 
-    const identityPaths = treeData.tree.filter(f => /^keys/[^/]+/identity.json$/.test(f.path)).map(f => f.path);
-    const sigPaths      = treeData.tree.filter(f => /^keys/[^/]+/signatures/.+.json$/.test(f.path)).map(f => f.path);
+    const identityPaths = treeData.tree.filter(f => /^keys\/[^/]+\/identity\.json$/.test(f.path)).map(f => f.path);
+    const sigPaths      = treeData.tree.filter(f => /^keys\/[^/]+\/signatures\/.+\.json$/.test(f.path)).map(f => f.path);
 
     if (sigPaths.length === 0) {
       exploreStatus.textContent = 'No signed artifacts found in this registry yet.';
