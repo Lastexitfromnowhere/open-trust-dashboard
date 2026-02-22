@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OPEN-TRUST — Vérifiez. Sans faire confiance.</title>
+<title>OPEN-TRUST — Verify. Without Trust.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -700,28 +700,28 @@ footer a:hover { color: #ffffff; }
 
   <!-- Hero -->
   <section class="hero">
-    <h1>Vérifiez. Sans faire confiance.</h1>
-    <p>Validez l'intégrité d'un binaire et l'identité de son développeur,<br>
-       sans serveur, sans compte, sans upload.</p>
+    <h1>Verify. Without Trust.</h1>
+    <p>Validate the integrity of a binary and its developer's identity,<br>
+       no server, no account, no upload.</p>
     <div class="zero-badge">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
       </svg>
-      Zéro Upload — votre fichier ne quitte jamais votre ordinateur
+      Zero Upload — your file never leaves your computer
     </div>
   </section>
 
   <!-- Step 1: Drop files -->
   <div class="card">
-    <div class="card-title"><span class="step-num">1</span>Déposez vos fichiers</div>
+    <div class="card-title"><span class="step-num">1</span>Drop your files</div>
 
     <div class="drop-zone" id="dropZone">
       <input type="file" id="fileInput" multiple accept="*">
       <span class="drop-icon">📂</span>
-      <div class="drop-title">Glissez vos fichiers ici</div>
+      <div class="drop-title">Drag your files here</div>
       <div class="drop-hint">
-        Déposez votre <code>binaire</code> + votre <code>provenance.json</code><br>
-        ou cliquez pour parcourir
+        Drop your <code>binary</code> + your <code>provenance.json</code><br>
+        or click to browse
       </div>
     </div>
 
@@ -730,11 +730,11 @@ footer a:hover { color: #ffffff; }
 
   <!-- Step 2: Registry -->
   <div class="card">
-    <div class="card-title"><span class="step-num">2</span>Registre communautaire (optionnel)</div>
+    <div class="card-title"><span class="step-num">2</span>Community registry (optional)</div>
 
     <div class="registry-row">
       <div class="input-wrap">
-        <label>Dépôt GitHub du registre</label>
+        <label>GitHub registry repository</label>
         <input type="text" id="registryInput"
           value="Lastexitfromnowhere/open-trust-registry"
           placeholder="ex: monorg/open-trust-registry"
@@ -742,24 +742,24 @@ footer a:hover { color: #ffffff; }
       </div>
       <label class="toggle-wrap">
         <div class="toggle" id="registryToggle"></div>
-        <span>Vérifier en ligne</span>
+        <span>Verify online</span>
       </label>
     </div>
     <p style="font-size:11px; color:var(--text-muted); margin-top:10px;">
-      Si activé, la page interrogera l'API GitHub pour confirmer que le hash de votre binaire
-      correspond à l'entrée publiée dans le registre de confiance.
+      If enabled, the page will query the GitHub API to confirm that your binary's hash
+      matches the entry published in the trust registry.
     </p>
   </div>
 
   <!-- Verify button -->
   <button class="btn-verify" id="btnVerify" disabled>
     <div class="spinner"></div>
-    <span class="btn-text">▶ &nbsp;VÉRIFIER</span>
+    <span class="btn-text">▶ &nbsp;VERIFY</span>
   </button>
 
   <!-- Progress -->
   <div class="progress-wrap" id="progressWrap">
-    <div class="progress-label" id="progressLabel">Calcul du hash SHA-256…</div>
+    <div class="progress-label" id="progressLabel">Computing SHA-256 hash…</div>
     <div class="progress-bar-track">
       <div class="progress-bar-fill" id="progressFill"></div>
     </div>
@@ -767,11 +767,11 @@ footer a:hover { color: #ffffff; }
 
   <!-- Results -->
   <section id="results">
-    <div class="section-sep">Résultats de la vérification</div>
+    <div class="section-sep">Verification results</div>
 
     <!-- Quick checks -->
     <div class="card" id="checksCard">
-      <div class="card-title">Vérifications cryptographiques</div>
+      <div class="card-title">Cryptographic checks</div>
       <div id="checksList"></div>
     </div>
 
@@ -784,8 +784,8 @@ footer a:hover { color: #ffffff; }
 <!-- Footer -->
 <footer>
   <p>
-    <strong>OPEN-TRUST</strong> est open-source · Aucune donnée n'est envoyée à un serveur ·
-    Vérification réalisée par <a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto" target="_blank">WebCrypto API</a>
+    <strong>OPEN-TRUST</strong> is open-source · No data is sent to any server ·
+    Verification powered by <a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto" target="_blank">WebCrypto API</a>
     (SHA-256, SHA-512, Ed25519)
   </p>
   <p style="margin-top:6px;">
@@ -915,16 +915,16 @@ registryToggle.addEventListener('click', () => {
 
 async function hashFile(file) {
   progressWrap.classList.add('visible');
-  progressLabel.textContent = 'Calcul SHA-256 + SHA-512…';
+  progressLabel.textContent = 'Computing SHA-256 + SHA-512…';
   progressFill.style.width = '0%';
 
   const buffer = await readFileAsArrayBuffer(file, (loaded, total) => {
     const pct = (loaded / total * 85).toFixed(0); // leave 15% for digest computation
     progressFill.style.width = pct + '%';
-    progressLabel.textContent = `Calcul du hash… ${formatSize(loaded)} / ${formatSize(total)}`;
+    progressLabel.textContent = `Hashing… ${formatSize(loaded)} / ${formatSize(total)}`;
   });
 
-  progressLabel.textContent = 'Finalisation des digests…';
+  progressLabel.textContent = 'Finalizing digests…';
   progressFill.style.width = '90%';
 
   const [sha256buf, sha512buf] = await Promise.all([
@@ -985,7 +985,7 @@ btnVerify.addEventListener('click', async () => {
   try {
     await runVerification();
   } catch (err) {
-    addCheck('fail', 'Erreur inattendue', err.message);
+    addCheck('fail', 'Unexpected error', err.message);
   } finally {
     btnVerify.classList.remove('loading');
     btnVerify.disabled = false;
@@ -1000,8 +1000,8 @@ async function runVerification() {
     const text = await state.provenanceFile.text();
     prov = JSON.parse(text);
   } catch {
-    addCheck('fail', 'provenance.json invalide',
-      'Le fichier ne peut pas être analysé comme JSON. Vérifiez que vous avez déposé le bon fichier.');
+    addCheck('fail', 'Invalid provenance.json',
+      'The file could not be parsed as JSON. Make sure you dropped the correct file.');
     return;
   }
 
@@ -1012,13 +1012,13 @@ async function runVerification() {
   const sha256ok = sha256 === prov.artifact?.sha256;
   addCheck(
     sha256ok ? 'ok' : 'fail',
-    sha256ok ? 'Intégrité SHA-256 vérifiée' : 'Échec de l\'intégrité SHA-256',
+    sha256ok ? 'SHA-256 integrity verified' : 'SHA-256 integrity failed',
     sha256ok
-      ? `Le hash correspond à celui signé par le développeur.`
-      : `Le binaire a été modifié après signature. N'installez pas ce fichier.`,
+      ? `The hash matches the one signed by the developer.`
+      : `The binary was modified after signing. Do not install this file.`,
     [
-      { label: 'Calculé', value: sha256, match: sha256ok },
-      { label: 'Signé',   value: prov.artifact?.sha256 ?? '—', match: sha256ok },
+      { label: 'Computed', value: sha256, match: sha256ok },
+      { label: 'Signed',   value: prov.artifact?.sha256 ?? '—', match: sha256ok },
     ]
   );
   if (!sha256ok) { finalizeBadge(prov, 0, false); return; }
@@ -1027,10 +1027,10 @@ async function runVerification() {
   const sha512ok = sha512 === prov.artifact?.sha512;
   addCheck(
     sha512ok ? 'ok' : 'fail',
-    sha512ok ? 'Intégrité SHA-512 vérifiée' : 'Échec de l\'intégrité SHA-512',
+    sha512ok ? 'SHA-512 integrity verified' : 'SHA-512 integrity failed',
     sha512ok
-      ? 'Le contrôle secondaire passe également.'
-      : 'Le hash SHA-512 ne correspond pas — le fichier est compromis.',
+      ? 'Secondary check passed as well.'
+      : 'SHA-512 hash mismatch — the file is compromised.',
     sha512ok ? [{ label: sha512.slice(0,32)+'…', value: '', match: true }] : []
   );
 
@@ -1042,13 +1042,13 @@ async function runVerification() {
     fpOk = computedFP === prov.identity?.pubkey_fingerprint;
     addCheck(
       fpOk ? 'ok' : 'fail',
-      fpOk ? 'Empreinte de clé cohérente' : 'Empreinte de clé incohérente',
+      fpOk ? 'Key fingerprint consistent' : 'Key fingerprint mismatch',
       fpOk
-        ? 'La clé publique correspond bien à l\'empreinte déclarée dans le manifeste.'
-        : 'Le manifeste a été modifié — la clé et l\'empreinte ne correspondent plus.'
+        ? 'The public key matches the fingerprint declared in the manifest.'
+        : 'The manifest was tampered with — key and fingerprint no longer match.'
     );
   } catch {
-    addCheck('fail', 'Clé publique malformée', 'Impossible de décoder la clé publique du manifeste.');
+    addCheck('fail', 'Malformed public key', 'Unable to decode the public key from the manifest.');
     finalizeBadge(prov, 0, false); return;
   }
 
@@ -1061,16 +1061,16 @@ async function runVerification() {
   );
 
   if (sigValid === null) {
-    addCheck('warn', 'Signature Ed25519 (non vérifiée)',
-      'Votre navigateur ne supporte pas Ed25519 via WebCrypto (Chrome 113+, Firefox 116+, Safari 17+ requis).\n' +
-      'Utilisez le CLI open-trust pour une vérification complète.');
+    addCheck('warn', 'Ed25519 signature (not verified)',
+      'Your browser does not support Ed25519 via WebCrypto (requires Chrome 113+, Firefox 116+, Safari 17+).\n' +
+      'Use the open-trust CLI for full verification.');
   } else {
     addCheck(
       sigValid ? 'ok' : 'fail',
-      sigValid ? 'Signature Ed25519 valide' : 'Signature Ed25519 INVALIDE',
+      sigValid ? 'Ed25519 signature valid' : 'Ed25519 signature INVALID',
       sigValid
-        ? `Signé par ${prov.identity?.display_name ?? 'inconnu'} le ${prov.signature?.timestamp ?? '?'}`
-        : 'La signature cryptographique est invalide — le manifeste a été falsifié.\nN\'installez pas ce binaire.'
+        ? `Signed by ${prov.identity?.display_name ?? 'unknown'} on ${prov.signature?.timestamp ?? '?'}`
+        : 'The cryptographic signature is invalid — the manifest has been forged.\nDo not install this binary.'
     );
     if (!sigValid) { finalizeBadge(prov, 0, false); return; }
   }
@@ -1089,18 +1089,18 @@ async function runVerification() {
   }
 
   if (attestations.length === 0) {
-    addCheck('warn', 'Aucune attestation de pairs',
-      'Ce binaire n\'a pas encore été validé par des pairs. Niveau de confiance : SELF-SIGNED.');
+    addCheck('warn', 'No peer attestations',
+      'This binary has not yet been validated by peers. Trust level: SELF-SIGNED.');
   } else {
     const ok = validAtts >= threshold;
     addCheck(
       ok ? 'ok' : 'warn',
       ok
-        ? `Attestations vérifiées (${validAtts}/${threshold})`
-        : `Attestations insuffisantes (${validAtts}/${threshold} requis)`,
+        ? `Attestations verified (${validAtts}/${threshold})`
+        : `Insufficient attestations (${validAtts}/${threshold} required)`,
       ok
-        ? `Le seuil de confiance est atteint — cet artefact est ${colWrap('TRUSTED', 'var(--green)')}.`
-        : `Il faut encore ${threshold - validAtts} attestation(s) de pairs pour le statut TRUSTED.`
+        ? `Trust threshold reached — this artifact is ${colWrap('TRUSTED', 'var(--green)')}.`
+        : `${threshold - validAtts} more peer attestation(s) needed to reach TRUSTED status.`
     );
   }
 
@@ -1110,23 +1110,23 @@ async function runVerification() {
     try {
       const remote = await fetchFromGitHub(repo, prov.identity.pubkey_fingerprint, sha256);
       if (!remote) {
-        addCheck('warn', 'Non trouvé dans le registre',
-          `Aucune entrée publiée dans ${repo} pour ce hash.\n` +
-          `Publiez avec : open-trust publish --registry git@github.com:${repo}.git`);
+        addCheck('warn', 'Not found in registry',
+          `No published entry in ${repo} for this hash.\n` +
+          `Publish with: open-trust publish --registry git@github.com:${repo}.git`);
       } else if (remote.artifact?.sha256 !== sha256) {
-        addCheck('fail', 'Divergence avec le registre',
-          'Le hash dans le registre ne correspond pas au fichier local. Alerte de sécurité.');
+        addCheck('fail', 'Registry mismatch',
+          'The hash in the registry does not match the local file. Security alert.');
       } else {
-        addCheck('ok', 'Registre communautaire confirmé',
-          `Le hash correspond à l'entrée publiée dans ${repo}.`);
+        addCheck('ok', 'Community registry confirmed',
+          `Hash matches the published entry in ${repo}.`);
       }
     } catch (e) {
-      addCheck('warn', 'Registre inaccessible',
-        `Impossible de contacter l'API GitHub : ${e.message}`);
+      addCheck('warn', 'Registry unreachable',
+        `Could not contact the GitHub API: ${e.message}`);
     }
   } else if (state.registryOn && !repo) {
-    addCheck('skip', 'Registre non configuré',
-      'Entrez l\'URL du dépôt GitHub pour activer la vérification en ligne.');
+    addCheck('skip', 'Registry not configured',
+      'Enter a GitHub repository URL to enable online verification.');
   }
 
   // ── Trust badge ──────────────────────────────────────────────────────────
@@ -1181,7 +1181,7 @@ function finalizeBadge(prov, validAtts, checksOk, attDetails = [], threshold = 2
 
   let level, levelLabel, icon;
   if (!checksOk) {
-    level = 'unknown'; levelLabel = 'INVALIDE'; icon = '✗';
+    level = 'unknown'; levelLabel = 'INVALID';  icon = '✗';
   } else if (validAtts >= threshold) {
     level = 'trusted'; levelLabel = 'TRUSTED';  icon = '✓';
   } else if (validAtts > 0) {
@@ -1189,7 +1189,7 @@ function finalizeBadge(prov, validAtts, checksOk, attDetails = [], threshold = 2
   } else if (proofs.length > 0) {
     level = 'self';    levelLabel = 'SELF-SIGNED'; icon = '◉';
   } else {
-    level = 'unknown'; levelLabel = 'INCONNU'; icon = '?';
+    level = 'unknown'; levelLabel = 'UNKNOWN';  icon = '?';
   }
 
   const socialHTML = proofs.map(sp => {
@@ -1201,7 +1201,7 @@ function finalizeBadge(prov, validAtts, checksOk, attDetails = [], threshold = 2
   }).join('');
 
   const attsHTML = (attDetails.length === 0)
-    ? '<p style="font-size:11px;color:var(--text-muted)">Aucune attestation.</p>'
+    ? '<p style="font-size:11px;color:var(--text-muted)">No attestations.</p>'
     : attDetails.map(att => `
       <div class="attestation-item">
         <span class="${att.valid === true ? 'att-valid' : att.valid === false ? 'att-invalid' : ''}">${att.valid === true ? '✓' : att.valid === false ? '✗' : '~'}</span>
@@ -1226,23 +1226,23 @@ function finalizeBadge(prov, validAtts, checksOk, attDetails = [], threshold = 2
       <div class="badge-body">
         ${proofs.length > 0 ? `
         <div class="badge-section">
-          <div class="badge-section-title">Identité sociale</div>
+          <div class="badge-section-title">Social identity</div>
           <div class="social-list">${socialHTML}</div>
         </div>` : ''}
 
         <div class="badge-section">
-          <div class="badge-section-title">Attestations de pairs (${validAtts} / ${threshold} requis)</div>
+          <div class="badge-section-title">Peer attestations (${validAtts} / ${threshold} required)</div>
           ${attsHTML}
         </div>
 
         <div class="badge-section">
-          <div class="badge-section-title">Empreinte de clé (fingerprint)</div>
+          <div class="badge-section-title">Key fingerprint</div>
           <div class="fp-row">
             <span class="fp-value mono">${fp}</span>
-            <button class="copy-btn" onclick="copyFP('${fp}')">copier</button>
+            <button class="copy-btn" onclick="copyFP('${fp}')">copy</button>
           </div>
           <p style="font-size:11px;color:var(--text-muted);margin-top:6px;">
-            Vérifiez cette empreinte dans le profil public du développeur pour confirmer son identité.
+            Cross-check this fingerprint against the developer's public profile to confirm their identity.
           </p>
         </div>
       </div>
@@ -1252,7 +1252,7 @@ function finalizeBadge(prov, validAtts, checksOk, attDetails = [], threshold = 2
 function copyFP(fp) {
   navigator.clipboard.writeText(fp).then(() => {
     const btn = document.querySelector('.copy-btn');
-    if (btn) { btn.textContent = 'copié !'; setTimeout(() => btn.textContent = 'copier', 2000); }
+    if (btn) { btn.textContent = 'copied!'; setTimeout(() => btn.textContent = 'copy', 2000); }
   });
 }
 
@@ -1264,8 +1264,8 @@ function copyFP(fp) {
   } catch {
     const hint = document.createElement('p');
     hint.style.cssText = 'text-align:center;font-size:11px;color:var(--amber);padding:8px 0';
-    hint.textContent = '⚠ Votre navigateur ne supporte pas Ed25519 SubtleCrypto — ' +
-      'la vérification de signature sera ignorée. Utilisez Chrome 113+, Firefox 116+ ou Safari 17+.';
+    hint.textContent = '⚠ Your browser does not support Ed25519 SubtleCrypto — ' +
+      'signature verification will be skipped. Use Chrome 113+, Firefox 116+, or Safari 17+.';
     document.querySelector('.hero').appendChild(hint);
   }
 })();
